@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TaskFlow</title>
+    <script src="https://unpkg.com/blockly/blockly.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
+    <xml id="toolbox" style="display: none">
+      <h1>Blockly Design Blocks</h1>
+      <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
+      <xml id="toolbox" style="display: none;">
+        <!-- Define the blocks available in the toolbox -->
+        <block type="create_task"></block>
+        <block type="assign_task"></block>
+        <block type="set_dependency"></block>
+        <block type="update_task_status"></block>
+        <block type="filter_tasks"></block>
+        <block type="sort_tasks"></block>
+      </xml>
+      <script>
+        // Initialize Blockly
+        var workspace = Blockly.inject('blocklyDiv', {
+          toolbox: document.getElementById('toolbox')
+        });
+    </script>
+</body>
+</html>

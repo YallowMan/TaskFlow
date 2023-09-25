@@ -6,22 +6,25 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-      <h1>Blockly Design Blocks</h1>
-      <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
-      <xml id="toolbox" style="display: none;">
-        <!-- Define the blocks available in the toolbox -->
+    <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
+    <xml id="toolbox" style="display: none;">
+      <category name="Tasks">
         <block type="create_task"></block>
         <block type="assign_task"></block>
         <block type="set_dependency"></block>
         <block type="update_task_status"></block>
+      </category>
+      <category name="Filters">
         <block type="filter_tasks"></block>
         <block type="sort_tasks"></block>
-      </xml>
-      <script src="custom_blocks.js"></script>
+      </category>
+    </xml>
+        <!-- Define your other blocks here -->
+    </xml>
+    <script src="custom_blocks.js"></script>
     <script>
-        // Initialize Blockly
-        var workspace = Blockly.inject('blocklyDiv', {
-          toolbox: document.getElementById('toolbox')});
+        var workspace = Blockly.inject('blocklyDiv',
+            {toolbox: document.getElementById('toolbox')});
     </script>
 </body>
 </html>

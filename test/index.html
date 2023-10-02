@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Task Management Blockly</title>
+  <script src="https://unpkg.com/blockly/blockly_compressed.js"></script>
+  <script src="https://unpkg.com/blockly/blocks_compressed.js"></script>
+  <script src="https://unpkg.com/blockly/javascript_compressed.js"></script>
+  <script src="custom_blocks.js"></script>
+</head>
+<body>
+  <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
+  <button onclick="generateCode()">Generate Code</button>
+  <xml id="toolbox" style="display: none;">
+    <!-- Toolbox definition -->
+  </xml>
+  <script>
+    var workspace = Blockly.inject('blocklyDiv',
+        {toolbox: document.getElementById('toolbox')});
+
+    function generateCode() {
+      var code = Blockly.JavaScript.workspaceToCode(workspace);
+      eval(code);
+    }
+  </script>
+</body>
+</html>

@@ -24,6 +24,23 @@
     <script>
         var workspace = Blockly.inject('blocklyDiv',
             {toolbox: document.getElementById('toolbox')});
+            scrollbars: true
+        });
+
+        function generateCode() {
+            var code = Blockly.JavaScript.workspaceToCode(workspace);
+            document.getElementById('codeDiv').innerText = code;
+        }
+
+        function runCode() {
+            var code = Blockly.JavaScript.workspaceToCode(workspace);
+            try {
+                var output = eval(code);
+                document.getElementById('outputDiv').innerText = output;
+            } catch (e) {
+                document.getElementById('outputDiv').innerText = 'Error: ' + e;
+            }
+        }
     </script>
 </body>
 </html>

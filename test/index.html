@@ -43,6 +43,26 @@
                 document.getElementById('outputDiv').innerText = 'Error: ' + e;
             }
         }
+
+    function createTask(task_name, task_description) {
+  // Check if both task_name and task_description are provided
+      if (task_name && task_description) {
+    // Create a task object with the provided name and description
+          var task = {
+              name: task_name,
+              description: task_description
+    };
+
+    // Here, you can implement your actual logic for task creation
+    // For now, we'll just log the task to the console as an example
+    console.log("Task created:", task);
+
+    // You can add further logic to save the task to your data store or perform other actions.
+  } else {
+    // Handle the case where inputs are missing
+    console.log("Error: Task name and description are required.");
+  }
+}
     </script>
 </body>
 </html>

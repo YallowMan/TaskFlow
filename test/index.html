@@ -1,39 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Task Management Blockly</title>
-  <script src="https://unpkg.com/blockly/blockly_min.js"></script>
-  <script src="custom_blocks.js"></script>
-  <link rel="stylesheet" type="text/css" href="styles.css">
+    <title>Task Management Blockly</title>
+    <script src="https://unpkg.com/blockly/blockly.min.js"></script>
+    <script src="custom_blocks.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-  <div class="row">
-    <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
-    <xml id="toolbox" style="display: none;">
-      <block type="create_task"></block>
-      <block type="task_details"></block>
-      <block type="string"></block>
-  </xml>
-  </div>
-   <div class="row button-row">
-        <button onclick="generateCode()">Generate JavaScript</button>
-   </div>
+    <div class="row">
+        <div id="blocklyDiv" class="full-width"></div>
+        <xml id="toolbox" style="display: none">
+            <block type="create_task"></block>
+            <block type="task_details"></block>
+            <block type="string"></block>
+        </xml>
+    </div>
+    <div class="row button-row">
+        <button onclick="generateCode()">Generate Code</button>
+    </div>
     <div class="row">
         <div id="codeDiv" class="half-width"></div>
         <div id="outputDiv" class="half-width"></div>
     </div>
-  <script>
-    var workspace = Blockly.inject('blocklyDiv', {
+    <script>
+        var workspace = Blockly.inject('blocklyDiv', {
             toolbox: document.getElementById('toolbox'),
             scrollbars: true
         });
 
-    function generateCode() {
-       var code = Blockly.JavaScript.workspaceToCode(workspace);
+        function generateCode() {
+            var code = Blockly.JavaScript.workspaceToCode(workspace);
             document.getElementById('codeDiv').innerText = code;
-    }
+        }
 
-    function runCode() {
+        function runCode() {
             var code = Blockly.JavaScript.workspaceToCode(workspace);
             try {
                 var output = eval(code);
@@ -42,6 +42,6 @@
                 document.getElementById('outputDiv').innerText = 'Error: ' + e;
             }
         }
-  </script>
+    </script>
 </body>
 </html>

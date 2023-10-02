@@ -56,5 +56,5 @@ Blockly.JavaScript['create_task'] = function(block) {
 
 // Define the "createTask" function
 function createTask(task_name, task_description) {
-  alert("Task created: " + task_name);
+  console.log("Task created: ", task_name, task_description);
 }

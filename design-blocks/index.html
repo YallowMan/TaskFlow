@@ -25,6 +25,7 @@
     <div class="row button-row">
         <button onclick="generateCode()">Generate JavaScript</button>
         <button onclick="runCode()">Run JavaScript</button>
+        <button id="generateCodeButton">Generate Code</button>
         <input type="file" id="loadInput" style="display: none;" onchange="loadBlocksFile(event)">
     </div>
     <div class="row">
@@ -39,6 +40,33 @@
             scrollbars: true
         });
 
+        // Add event listener to the generate code button
+  const generateCodeButton = document.getElementById('generateCodeButton');
+  generateCodeButton.addEventListener('click', generateCode);
+
+  // Function to generate code
+  function generateCode() {
+    // Retrieve the input values from the Blockly blocks
+    const taskName = Blockly.JavaScript.valueToCode(workspace, 'task_name', Blockly.JavaScript.ORDER_ATOMIC);
+    const taskDescription = Blockly.JavaScript.valueToCode(workspace, 'task_description', Blockly.JavaScript.ORDER_ATOMIC);
+    const dueDate = Blockly.JavaScript.valueToCode(workspace, 'due_date', Blockly.JavaScript.ORDER_ATOMIC);
+
+    // Format the input values into a code string
+    const code = `createTask("${taskName}", "${taskDescription}", "${dueDate}");`;
+
+    // Display the generated code
+    const codeOutput = document.getElementById('codeOutput');
+    codeOutput.textContent = code;
+  }
+
+  // Function to create a task
+  function createTask(taskName, taskDescription, dueDate) {
+    // Add your code here to create the task with the relevant information
+    console.log(`Task created: ${taskName}`);
+    console.log(`Task description: ${taskDescription}`);
+    console.log(`Due date: ${dueDate}`);
+  }
+});
         function generateCode() {
             var code = Blockly.JavaScript.workspaceToCode(workspace);
             document.getElementById('codeDiv').innerText = code;

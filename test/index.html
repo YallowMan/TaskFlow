@@ -8,13 +8,16 @@
   <script src="custom_blocks.js"></script>
 </head>
 <body>
-  <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
-  <button onclick="generateCode()">Generate Code</button>
-  <xml id="toolbox" style="display: none;">
+  <div class="row">
+    <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
+    <xml id="toolbox" style="display: none;">
       <block type="create_task"></block>
       <block type="task_details"></block>
       <block type="string"></block>
   </xml>
+  </div>
+   <div class="row button-row">
+        <button onclick="generateCode()">Generate JavaScript</button>
   <div class="row">
         <div id="codeDiv" class="half-width"></div>
         <div id="outputDiv" class="half-width"></div>

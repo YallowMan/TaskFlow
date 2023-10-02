@@ -19,6 +19,17 @@
         <block type="sort_tasks"></block>
       </category>
     </xml>
+    <div class="row button-row">
+        <button onclick="generateCode()">Generate JavaScript</button>
+        <button onclick="runCode()">Run JavaScript</button>
+        <button onclick="saveBlocks()">Save Blocks</button>
+        <button onclick="loadBlocks()">Load Blocks</button>
+        <input type="file" id="loadInput" style="display: none;" onchange="loadBlocksFile(event)">
+    </div>
+    <div class="row">
+        <div id="codeDiv" class="half-width"></div>
+        <div id="outputDiv" class="half-width"></div>
+    </div>
         <!-- Define your other blocks here -->
     <script src="custom_blocks.js"></script>
     <script>

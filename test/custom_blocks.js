@@ -17,6 +17,17 @@ Blockly.Blocks['create_task'] = {
   }
 };
 
+Blockly.Blocks['string'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("String")
+        .appendField(new Blockly.FieldTextInput(""), "content");
+    this.setOutput(true, "String");
+    this.setColour(160);
+    this.setTooltip("Represents a string");
+    this.setHelpUrl("");
+  }
+};
 // Define the "task_details" block
 Blockly.Blocks['task_details'] = {
     init: function() {

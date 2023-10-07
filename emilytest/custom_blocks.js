@@ -137,3 +137,13 @@ Blockly.Blocks['custom_date'] = {
     this.setTooltip("Create a custom date.");
   }
 };
+Blockly.JavaScript['custom_date'] = function(block) {
+  var month = Blockly.JavaScript.valueToCode(block, 'MONTH', Blockly.JavaScript.ORDER_NONE) || '0';
+  var day = Blockly.JavaScript.valueToCode(block, 'DAY', Blockly.JavaScript.ORDER_NONE) || '0';
+  var year = Blockly.JavaScript.valueToCode(block, 'YEAR', Blockly.JavaScript.ORDER_NONE) || '0';
+
+  // Generate JavaScript code to create a Date object
+  var code = `new Date(${year}, ${month} - 1, ${day})`;
+
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};

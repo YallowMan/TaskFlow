@@ -118,3 +118,22 @@ Blockly.Blocks['text'] = {
     }
   };
   
+// Define the "date" block
+Blockly.Blocks['custom_date'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Date:");
+    this.appendValueInput("MONTH")
+        .setCheck("Number")
+        .appendField("Month");
+    this.appendValueInput("DAY")
+        .setCheck("Number")
+        .appendField("Day");
+    this.appendValueInput("YEAR")
+        .setCheck("Number")
+        .appendField("Year");
+    this.setOutput(true, "Date");
+    this.setColour(230);
+    this.setTooltip("Create a custom date.");
+  }
+};

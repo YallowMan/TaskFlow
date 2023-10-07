@@ -29,6 +29,7 @@
 
     <div class="row button-row">
         <button onclick="generateCode()">Generate JavaScript</button>
+        <button onclick="runCode()">Run JavaScript</button>
         <button onclick="saveBlocks()">Save Blocks</button>
     </div>
 
@@ -43,47 +44,31 @@
           scrollbars: true
         });
 
-        // Add event listener to the generate code button
-  // const generateCodeButton = document.getElementById('generateCodeButton');
-  // generateCodeButton.addEventListener('click', generateCode);
+        // Function to generate code
+        function generateCode() {
+            var code = Blockly.JavaScript.workspaceToCode(workspace);
+            document.getElementById('codeDiv').innerText = code;
+        }
 
-  // Function to generate code
-  function generateCode() {
-      var code = Blockly.JavaScript.workspaceToCode(workspace);
-      document.getElementById('codeDiv').innerText = code;
-  }
+        function runCode() {
+            var code = Blockly.JavaScript.workspaceToCode(workspace);
+            try {
+                var output = eval(code);
+                document.getElementById('outputDiv').innerText = output;
+            } catch (e) {
+                document.getElementById('outputDiv').innerText = 'Error: ' + e;
+            }
+        }
 
-  function saveBlocks() {
-      var xml = Blockly.Xml.workspaceToDom(workspace);
-      var xmlText = Blockly.Xml.domToPrettyText(xml);
-      var blob = new Blob([xmlText], {type: 'text/xml'});
-      var a = document.createElement('a');
-      a.download = 'blocks.xml';
-      a.href = URL.createObjectURL(blob);
-      a.click();
-  }
-
-  // // Function to create a task
-  // function createTask(taskName, taskDescription, dueDate) {
-  //   // Add your code here to create the task with the relevant information
-  //   console.log(`Task created: ${taskName}`);
-  //   console.log(`Task description: ${taskDescription}`);
-  //   console.log(`Due date: ${dueDate}`);
-  // }
-  // function generateCode() {
-  //     var code = Blockly.JavaScript.workspaceToCode(workspace);
-  //     document.getElementById('codeDiv').innerText = code;
-  // }
-
-  // function runCode() {
-  //     var code = Blockly.JavaScript.workspaceToCode(workspace);
-  //     try {
-  //         var output = eval(code);
-  //         document.getElementById('outputDiv').innerText = output;
-  //     } catch (e) {
-  //         document.getElementById('outputDiv').innerText = 'Error: ' + e;
-  //     }
-  // }
-  </script>
+        function saveBlocks() {
+            var xml = Blockly.Xml.workspaceToDom(workspace);
+            var xmlText = Blockly.Xml.domToPrettyText(xml);
+            var blob = new Blob([xmlText], {type: 'text/xml'});
+            var a = document.createElement('a');
+            a.download = 'blocks.xml';
+            a.href = URL.createObjectURL(blob);
+            a.click();
+        }
+        </script>
 </body>
 </html>

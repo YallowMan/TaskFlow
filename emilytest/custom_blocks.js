@@ -64,6 +64,18 @@ Blockly.Blocks['text'] = {
       this.setHelpUrl("");
     }
   };
+  Blockly.JavaScript['assign_task'] = function(block) {
+    var taskName = Blockly.JavaScript.valueToCode(block, 'task', Blockly.JavaScript.ORDER_NONE) || "''";
+    var user = Blockly.JavaScript.valueToCode(block, 'user', Blockly.JavaScript.ORDER_NONE) || "''";
+  
+    // Generate JavaScript code to create a task object
+    var code = `{
+      task: ${taskName},
+      user: ${user}
+    }`;
+  
+    return code;
+  };
   
   // Define the "set_dependency" block
   Blockly.Blocks['set_dependency'] = {
@@ -82,6 +94,18 @@ Blockly.Blocks['text'] = {
       this.setTooltip("Set a dependency between tasks");
       this.setHelpUrl("");
     }
+  };
+  Blockly.JavaScript['set_dependency'] = function(block) {
+    var dep_task = Blockly.JavaScript.valueToCode(block, 'dependent_task', Blockly.JavaScript.ORDER_NONE) || "''";
+    var dependency = Blockly.JavaScript.valueToCode(block, 'dependency_task', Blockly.JavaScript.ORDER_NONE) || "''";
+  
+    // Generate JavaScript code to create a task object
+    var code = `{
+      dependent task: ${dep_task},
+      dependency task: ${dependency}
+    }`;
+  
+    return code;
   };
   
   // Define the "update_task_status" block
@@ -102,6 +126,19 @@ Blockly.Blocks['text'] = {
       this.setHelpUrl("");
     }
   };
+  Blockly.JavaScript['update_task_status'] = function(block) {
+    var task_name = Blockly.JavaScript.valueToCode(block, 'task', Blockly.JavaScript.ORDER_NONE) || "''";
+    var status = Blockly.JavaScript.valueToCode(block, 'status', Blockly.JavaScript.ORDER_NONE) || "''";
+  
+    // Generate JavaScript code to create a task object
+    var code = `{
+      task: ${task_name},
+      status: ${status}
+    }`;
+  
+    return code;
+  };
+  
   
   // Define the "filter_tasks" block
   Blockly.Blocks['filter_tasks'] = {

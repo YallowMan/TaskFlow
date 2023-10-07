@@ -3,6 +3,7 @@
 <head>
     <title>TaskFlow</title>
     <script src="https://unpkg.com/blockly/blockly.min.js"></script>
+    <script src="custom_blocks.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
@@ -20,7 +21,7 @@
       </category>
       <category name="Text">
         <block type="text"></block>
-        <block type="custom_blocks"></block>
+        <block type="custom_date"></block>
       </category>
     </xml>
     <div class="row button-row">
@@ -31,7 +32,6 @@
         <div id="outputDiv" class="half-width"></div>
     </div>
         <!-- Define your other blocks here -->
-    <script src="custom_blocks.js"></script>
     <script>
         var workspace = Blockly.inject('blocklyDiv',
             {toolbox: document.getElementById('toolbox'),

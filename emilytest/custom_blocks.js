@@ -124,13 +124,13 @@ Blockly.Blocks['custom_date'] = {
     this.appendDummyInput()
         .appendField("Date:");
     this.appendValueInput("MONTH")
-        .setCheck("Number")
+        .setCheck("String")
         .appendField("Month");
     this.appendValueInput("DAY")
-        .setCheck("Number")
+        .setCheck("String")
         .appendField("Day");
     this.appendValueInput("YEAR")
-        .setCheck("Number")
+        .setCheck("String")
         .appendField("Year");
     this.setOutput(true, "Date");
     this.setColour(230);

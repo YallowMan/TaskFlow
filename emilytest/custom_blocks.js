@@ -33,7 +33,6 @@ Blockly.JavaScript['create_task'] = function(block) {
 
   return code;
 };
-  
 
 Blockly.Blocks['text'] = {
   init: function() {

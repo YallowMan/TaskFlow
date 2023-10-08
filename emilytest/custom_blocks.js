@@ -134,8 +134,10 @@ Blockly.Blocks['text'] = {
       task: ${task_name},
       status: ${status}
     }`;
-  
-    return code;
+
+    var displayCode = 'console.log(\'${code}\');';
+
+    return displayCode;
   };
   
   

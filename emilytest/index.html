@@ -4,6 +4,10 @@
     <title>TaskFlow</title>
     <script src="https://unpkg.com/blockly/blockly.min.js"></script>
     <script src="custom_blocks.js"></script>
+    <!-- Include Blockly library -->
+    <script src="blockly_compressed.js"></script>
+    <!-- Include Blockly JavaScript generator -->
+    <script src="blocks_compressed.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
@@ -53,13 +57,14 @@
         }
 
         function runCode() {
-            var code = Blockly.JavaScript.workspaceToCode(workspace);
-            try {
-                var output = eval(code);
-                document.getElementById('outputDiv').innerText = output;
-            } catch (e) {
-                document.getElementById('outputDiv').innerText = 'Error: ' + e;
-            }
+          var codeToRun = document.getElementById('codeDiv').innerText;
+
+          try {
+              // Execute the generated code using eval()
+              eval(codeToRun);
+          } catch (error) {
+              console.error('Error executing code:', error);
+          }
         }
 
         function saveBlocks() {

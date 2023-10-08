@@ -31,6 +31,8 @@
         <button onclick="generateCode()">Generate JavaScript</button>
         <button onclick="runCode()">Run JavaScript</button>
         <button onclick="saveBlocks()">Save Blocks</button>
+        <button onclick="loadBlocks()">Load Blocks</button>
+        <input type="file" id="loadInput" style="display: none;" onchange="loadBlocksFile(event)">
     </div>
 
     <div class="row">
@@ -69,6 +71,20 @@
             a.href = URL.createObjectURL(blob);
             a.click();
         }
-        </script>
+
+        function loadBlocks() {
+            document.getElementById('loadInput').click();
+        }
+
+        function loadBlocksFile(event) {
+            var file = event.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var xml = Blockly.utils.xml.textToDom(e.target.result);
+                Blockly.Xml.appendDomToWorkspace(xml, workspace);
+            };
+            reader.readAsText(file);
+        }
+    </script>
 </body>
 </html>

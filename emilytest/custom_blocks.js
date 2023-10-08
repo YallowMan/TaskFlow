@@ -104,7 +104,7 @@ Blockly.Blocks['text'] = {
       dependency task: ${dependency}
     }`;
   
-    return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+    return code;
   };
   
   // Define the "update_task_status" block
@@ -135,9 +135,9 @@ Blockly.Blocks['text'] = {
       status: ${status}
     }`;
 
-    var displayCode = 'console.log(\'${code}\');';
+    //var displayCode = 'console.log(\'${code}\');';
 
-    return displayCode;
+    return code;
   };
   
   

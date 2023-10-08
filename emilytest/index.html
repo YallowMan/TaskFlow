@@ -57,13 +57,12 @@
         }
 
         function runCode() {
-          var codeToRun = document.getElementById('codeDiv').innerText;
-
+          var code = Blockly.JavaScript.workspaceToCode(workspace);
           try {
-              // Execute the generated code using eval()
-              eval(codeToRun);
-          } catch (error) {
-              console.error('Error executing code:', error);
+              var output = eval(code);
+              document.getElementById('outputDiv').innerText = output;
+          } catch (e) {
+              document.getElementById('outputDiv').innerText = 'Error: ' + e;
           }
         }
 

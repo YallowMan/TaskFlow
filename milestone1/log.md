@@ -4,10 +4,12 @@ The work was divided through the group members by allowing each other to choose/
 ## Each members work:
 Carlos Garcia - 
 https://github.com/YallowMan/TaskFlow/tree/main/test
+
 https://github.com/YallowMan/TaskFlow/tree/main/design-blocks - Shared work between Emily and Carlos
 
 Emily Nguyen - 
 https://github.com/YallowMan/TaskFlow/tree/main/emilytest
+
 https://github.com/YallowMan/TaskFlow/tree/main/design-blocks - Shared work between Emily and Carlos
 
 Emma Harper - N/A

@@ -8,7 +8,7 @@ To run and test this milestone you will need to use this link to get to the bloc
 2. Add a task name description and then after adding the due dates second block with the month day and year.
 
 ## Assign a Task
--Here you will just re-enter what the task is and who you would like to be working on it through putting a name for the user.
+- Here you will just re-enter what the task is and who you would like to be working on it through putting a name for the user.
 
 ## Set a Dependency 
 - Connect this block to the past two blocks if you want to set a task within the task.

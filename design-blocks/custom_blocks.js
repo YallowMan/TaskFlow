@@ -18,17 +18,18 @@ Blockly.Blocks['create_task'] = {
       this.setTooltip("Create a new task");
       this.setHelpUrl("");
     }
-  };
+};
 Blockly.JavaScript['create_task'] = function(block) {
   var taskName = Blockly.JavaScript.valueToCode(block, 'task_name', Blockly.JavaScript.ORDER_NONE) || "''";
   var taskDescription = Blockly.JavaScript.valueToCode(block, 'task_description', Blockly.JavaScript.ORDER_NONE) || "''";
   var dueDate = Blockly.JavaScript.valueToCode(block, 'due_date', Blockly.JavaScript.ORDER_NONE) || "null";
+
   // Generate JavaScript code to create a task object
-  var code = '{
+  var code = `{
     name: ${taskName},
     description: ${taskDescription},
     dueDate: ${dueDate}
-  }';
+  }`;
 
   return code;
 };
@@ -105,7 +106,7 @@ Blockly.Blocks['text'] = {
   
     return code;
   };
-
+  
   // Define the "update_task_status" block
   Blockly.Blocks['update_task_status'] = {
     init: function() {
@@ -138,7 +139,8 @@ Blockly.Blocks['text'] = {
 
     return code;
   };
-
+  
+  
   // Define the "filter_tasks" block
   Blockly.Blocks['filter_tasks'] = {
     init: function() {
@@ -168,6 +170,7 @@ Blockly.Blocks['text'] = {
       this.setHelpUrl("");
     }
   };
+  
 // Define the "date" block
 Blockly.Blocks['custom_date'] = {
   init: function() {

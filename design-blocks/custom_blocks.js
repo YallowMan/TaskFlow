@@ -24,11 +24,11 @@ Blockly.JavaScript['create_task'] = function(block) {
   var taskDescription = Blockly.JavaScript.valueToCode(block, 'task_description', Blockly.JavaScript.ORDER_NONE) || "''";
   var dueDate = Blockly.JavaScript.valueToCode(block, 'due_date', Blockly.JavaScript.ORDER_NONE) || "null";
   // Generate JavaScript code to create a task object
-  var code = {`
+  var code = `{
     name: ${taskName},
     description: ${taskDescription},
     dueDate: ${dueDate}
-  `};
+  }`;
 
   return code;
 };

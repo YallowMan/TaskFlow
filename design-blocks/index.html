@@ -58,6 +58,7 @@
 
         function runCode() {
           var code = Blockly.JavaScript.workspaceToCode(workspace);
+            console.log(code); 
           try {
               var output = eval(code);
               document.getElementById('outputDiv').innerText = output;

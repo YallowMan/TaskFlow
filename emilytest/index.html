@@ -36,6 +36,7 @@
         <button onclick="runCode()">Run JavaScript</button>
         <button onclick="saveBlocks()">Save Blocks</button>
         <button onclick="loadBlocks()">Load Blocks</button>
+        <button onclick="saveCode()">Save Code</button>
         <input type="file" id="loadInput" style="display: none;" onchange="loadBlocksFile(event)">
     </div>
 
@@ -88,6 +89,18 @@
                 Blockly.Xml.appendDomToWorkspace(xml, workspace);
             };
             reader.readAsText(file);
+        }
+
+        function saveCode() {
+          var code = Blockly.JavaScript.workspaceToCode(workspace);
+
+          // Create a Blob with the code content
+          var blob = new Blob([code], { type: 'text/javascript' });
+
+          // Create a link to download the Blob
+          var a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = 'generated_code.js';
         }
     </script>
 </body>

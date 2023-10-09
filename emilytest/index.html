@@ -92,15 +92,19 @@
         }
 
         function saveCode() {
-          var code = Blockly.JavaScript.workspaceToCode(workspace);
+            // Generate JavaScript code using your Blockly custom block
+            var code = Blockly.JavaScript.workspaceToCode(workspace);
 
-          // Create a Blob with the code content
-          var blob = new Blob([code], { type: 'text/javascript' });
+            // Create a Blob with the code content
+            var blob = new Blob([code], { type: 'text/javascript' });
 
-          // Create a link to download the Blob
-          var a = document.createElement('a');
-          a.href = URL.createObjectURL(blob);
-          a.download = 'generated_code.js';
+            // Create a link to download the Blob
+            var a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'generated_code.js';
+
+            // Trigger a click event on the link to initiate the download
+            a.click();
         }
     </script>
 </body>

@@ -1,3 +1,6 @@
+# Link to Midterm Presentation
+[TaskFlow Slides](https://docs.google.com/presentation/d/1_JTLglgxwvwzzOkPukecUspuLYFEsLb7Fx6GRgJBKvs/edit?usp=sharing)
+
 # Directions for Running Prototype
 
 To run and test this milestone you will need to use this link to get to the blockly environment. The link being https://yallowman.github.io/TaskFlow/design-blocks/ 

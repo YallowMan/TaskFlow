@@ -1,5 +1,5 @@
 # TASKFLOW
-https://yallowman.github.io/TaskFlow/midterm/design-blocks/
+https://yallowman.github.io/TaskFlow/src
 ## Group Members: Carlos Garcia, Emma Harper, Emily Nguyen, Sofia Bejerano
 Creating a effective task management system is crucial for personal and professional success. Simplify the sometimes overwhelming process of organizing, prioritizing and tracking tasks.
 

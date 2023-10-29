@@ -1,5 +1,5 @@
 # Link to Midterm Presentation
-[TaskFlow Slides]([https://docs.google.com/presentation/d/1FVmqdsD7Z62_QzUZkrdsjwdCT_HNtBvu/edit?usp=sharing&ouid=113901356202814530599&rtpof=true&sd=true))
+[TaskFlow Slides]([https://docs.google.com/presentation/d/1FVmqdsD7Z62_QzUZkrdsjwdCT_HNtBvu/edit?usp=sharing&ouid=113901356202814530599&rtpof=true&sd=true])
 
 # Directions for Running Prototype
 

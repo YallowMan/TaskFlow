@@ -176,27 +176,55 @@ Blockly.Blocks['custom_date'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("Date:");
-    this.appendValueInput("MONTH")
-        .setCheck("String")
-        .appendField("Month");
-    this.appendValueInput("DAY")
-        .setCheck("String")
-        .appendField("Day");
-    this.appendValueInput("YEAR")
-        .setCheck("String")
-        .appendField("Year");
+
+    // Dropdown for Month
+    var monthOptions = [
+      ["January", "0"],
+      ["February", "1"],
+      ["March", "2"],
+      ["April", "3"],
+      ["May", "4"],
+      ["June", "5"],
+      ["July", "6"],
+      ["August", "7"],
+      ["September", "8"],
+      ["October", "9"],
+      ["November", "10"],
+      ["December", "11"]
+    ];
+    this.appendDummyInput()
+        .appendField("Month")
+        .appendField(new Blockly.FieldDropdown(monthOptions), "MONTH");
+
+    // Dropdown for Day
+    var dayOptions = [];
+    for (var i = 1; i <= 31; i++) {
+      dayOptions.push([i.toString(), i.toString()]);
+    }
+    this.appendDummyInput()
+        .appendField("Day")
+        .appendField(new Blockly.FieldDropdown(dayOptions), "DAY");
+
+    // Text field for Year
+    this.appendDummyInput()
+        .appendField("Year")
+        .appendField(new Blockly.FieldTextInput('2023'), 'YEAR');
+
     this.setOutput(true, "Date");
     this.setColour(230);
     this.setTooltip("Create a custom date.");
   }
 };
+
 Blockly.JavaScript['custom_date'] = function(block) {
-  var month = Blockly.JavaScript.valueToCode(block, 'MONTH', Blockly.JavaScript.ORDER_NONE) || '0';
-  var day = Blockly.JavaScript.valueToCode(block, 'DAY', Blockly.JavaScript.ORDER_NONE) || '0';
-  var year = Blockly.JavaScript.valueToCode(block, 'YEAR', Blockly.JavaScript.ORDER_NONE) || '0';
+  var month = block.getFieldValue('MONTH');
+  var day = block.getFieldValue('DAY');
+  var year = block.getFieldValue('YEAR');
 
   // Generate JavaScript code to create a Date object
-  var code = `new Date(${year}, ${month} - 1, ${day})`;
+  var code = `new Date(${year}, ${month}, ${day})`;
 
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
+
+

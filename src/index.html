@@ -11,7 +11,27 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-    <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
+    <table>
+      <tr>
+        <td>
+          <p>
+            Once an <a href="index.html">area is defined</a>, Blockly can be
+            injected and positioned over the area.
+            A resize handler keeps it in position as the page changes.
+          </p>
+
+          <p>&rarr; More info on <a href="https://developers.google.com/blockly/guides/configure/web/resizable">injecting resizable Blockly</a>&hellip;</p>
+        </td>
+      </tr>
+      <tr>
+        <td id="blocklyArea">
+        </td>
+      </tr>
+    </table>
+
+    <div id="blocklyDiv" style="position: absolute"></div>
+
+    <!-- <div id="blocklyDiv" style="height: 480px; width: 600px;"></div> -->
 
     <!-- toolbox -->
     <xml id="toolbox" style="display: none;">
@@ -46,10 +66,35 @@
     </div>
 
     <script>
-        var workspace = Blockly.inject('blocklyDiv', {
-          toolbox: document.getElementById('toolbox'),
-          scrollbars: true
-        });
+        // var workspace = Blockly.inject('blocklyDiv', {
+        //   toolbox: document.getElementById('toolbox'),
+        //   scrollbars: true
+        // });
+
+        var blocklyArea = document.getElementById('blocklyArea');
+        var blocklyDiv = document.getElementById('blocklyDiv');
+        var demoWorkspace = Blockly.inject(blocklyDiv,
+            {media: 'https://unpkg.com/browse/blockly@10.2.2/media/',
+            toolbox: document.getElementById('toolbox')});
+        var onresize = function(e) {
+          // Compute the absolute coordinates and dimensions of blocklyArea.
+          var element = blocklyArea;
+          var x = 0;
+          var y = 0;
+          do {
+            x += element.offsetLeft;
+            y += element.offsetTop;
+            element = element.offsetParent;
+          } while (element);
+          // Position blocklyDiv over blocklyArea.
+          blocklyDiv.style.left = x + 'px';
+          blocklyDiv.style.top = y + 'px';
+          blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
+          blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';
+          Blockly.svgResize(demoWorkspace);
+
+          console.log('resize');
+        };
 
         // Function to generate code
         function generateCode() {

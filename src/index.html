@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
+    <!-- Resizable Table and Blockly div code sourced from Google. -->
     <table>
       <tr>
         <td id="blocklyArea">
@@ -18,6 +19,7 @@
 
     <div id="blocklyDiv" style="position: absolute"></div>
 
+    <!-- FIXME: Remove this old blockly div code when no longer needed. -->
     <!-- <div id="blocklyDiv" style="height: 480px; width: 600px;"></div> -->
 
     <!-- toolbox -->
@@ -53,14 +55,16 @@
     </div>
 
     <script>
+        // FIXME: Delete this old Blockly injection code when unneeded.
         // var workspace = Blockly.inject('blocklyDiv', {
         //   toolbox: document.getElementById('toolbox'),
         //   scrollbars: true
         // });
 
+        // Resizable Blockly injection code from Google.
         var blocklyArea = document.getElementById('blocklyArea');
         var blocklyDiv = document.getElementById('blocklyDiv');
-        var demoWorkspace = Blockly.inject(blocklyDiv,
+        var workspace = Blockly.inject(blocklyDiv,
             {media: 'https://unpkg.com/browse/blockly@10.2.2/media/',
             toolbox: document.getElementById('toolbox')});
         var onresize = function(e) {
@@ -78,10 +82,12 @@
           blocklyDiv.style.top = y + 'px';
           blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
           blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';
-          Blockly.svgResize(demoWorkspace);
-
-          console.log('resize');
+          Blockly.svgResize(workspace);
         };
+
+        // Sourced from Google: Resize Blockly.
+        window.addEventListener('resize', onresize, false);
+        onresize();
 
         // Function to generate code
         function generateCode() {

@@ -3,15 +3,24 @@
 <head>
     <title>TaskFlow</title>
     <script src="https://unpkg.com/blockly/blockly.min.js"></script>
-    <script src="custom_blocks.js"></script>
-    <!-- Include Blockly library -->
-    <script src="blockly_compressed.js"></script>
+    <script src="./custom_blocks.js"></script>
     <!-- Include Blockly JavaScript generator -->
-    <script src="blocks_compressed.js"></script>
+    <!-- <script src="https://unpkg.com/blockly/blocks_compressed.js"></script> -->
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-    <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
+    <!-- Resizable Table and Blockly div code sourced from Google. -->
+    <table>
+      <tr>
+        <td id="blocklyArea">
+        </td>
+      </tr>
+    </table>
+
+    <div id="blocklyDiv" style="position: absolute"></div>
+
+    <!-- FIXME: Remove this old blockly div code when no longer needed. -->
+    <!-- <div id="blocklyDiv" style="height: 480px; width: 600px;"></div> -->
 
     <!-- toolbox -->
     <xml id="toolbox" style="display: none;">
@@ -46,10 +55,39 @@
     </div>
 
     <script>
-        var workspace = Blockly.inject('blocklyDiv', {
-          toolbox: document.getElementById('toolbox'),
-          scrollbars: true
-        });
+        // FIXME: Delete this old Blockly injection code when unneeded.
+        // var workspace = Blockly.inject('blocklyDiv', {
+        //   toolbox: document.getElementById('toolbox'),
+        //   scrollbars: true
+        // });
+
+        // Resizable Blockly injection code from Google.
+        var blocklyArea = document.getElementById('blocklyArea');
+        var blocklyDiv = document.getElementById('blocklyDiv');
+        var workspace = Blockly.inject(blocklyDiv,
+            {media: 'https://unpkg.com/browse/blockly@10.2.2/media/',
+            toolbox: document.getElementById('toolbox')});
+        var onresize = function(e) {
+          // Compute the absolute coordinates and dimensions of blocklyArea.
+          var element = blocklyArea;
+          var x = 0;
+          var y = 0;
+          do {
+            x += element.offsetLeft;
+            y += element.offsetTop;
+            element = element.offsetParent;
+          } while (element);
+          // Position blocklyDiv over blocklyArea.
+          blocklyDiv.style.left = x + 'px';
+          blocklyDiv.style.top = y + 'px';
+          blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
+          blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';
+          Blockly.svgResize(workspace);
+        };
+
+        // Sourced from Google: Resize Blockly.
+        window.addEventListener('resize', onresize, false);
+        onresize();
 
         // Function to generate code
         function generateCode() {

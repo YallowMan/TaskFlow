@@ -1,61 +1,283 @@
-Blockly.Blocks['initialize_database'] = {
-  init: function() {
-    this.setColour(230);
-    this.appendDummyInput('Name').appendField('Initialize Database');
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-  },
-  generateCode: function(workspace) {
-    var dbConnectionName = Blockly.Python.variableDeclaration('dbConnection', 'sqlite3.connect("TaskManager.db")');
-    return dbConnectionName;
-  },
-  customFields: {},
-};
+// Import SQLite library
+const sqlite3 = require('sqlite3').verbose();
 
+// Create a new SQLite database in memory
+const db = new sqlite3.Database(':memory:');
+
+// Create a table for tasks in the database
+db.run(`CREATE TABLE IF NOT EXISTS tasks (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT,
+  description TEXT,
+  due_date DATE
+)`);
+
+// Define the "create_task" block
 Blockly.Blocks['create_task'] = {
   init: function() {
-    this.setColour(300);
-    this.appendValueInput('name').setCheck('String').appendField('Create Task: Name');
-    this.appendValueInput('description').setCheck('String').appendField('Description');
-    this.appendValueInput('due_date').setCheck('String').appendField('Due Date');
-    this.appendValueInput('assigned_to').setCheck('String').appendField('Assigned To');
+    this.appendDummyInput()
+        .appendField("Create Task");
+    this.appendValueInput("task_name")
+        .setCheck("String")
+        .appendField("Task Name");
+    this.appendValueInput("task_description")
+        .setCheck("String")
+        .appendField("Task Description");
+    this.appendValueInput("due_date")
+        .setCheck("Date")
+        .appendField("Due Date");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-  },
-  generateCode: function(workspace) {
-    var dbConnectionName = Blockly.Python.variable('dbConnection');
-    var nameValue = Blockly.Python.valueToCode(workspace, 'name', Blockly.Python.ORDER_ASSIGNMENT);
-    var descriptionValue = Blockly.Python.valueToCode(workspace, 'description', Blockly.Python.ORDER_ASSIGNMENT);
-    var dueDateValue = Blockly.Python.valueToCode(workspace, 'due_date', Blockly.Python.ORDER_ASSIGNMENT);
-    var assignedToValue = Blockly.Python.valueToCode(workspace, 'assigned_to', Blockly.Python.ORDER_ASSIGNMENT);
-
-    var code = 'dbConnection.execute("INSERT INTO task (name, description, due_date, assigned_to) VALUES (?, ?, ?, ?)", (' + nameValue + ', ' + descriptionValue + ', ' + dueDateValue + ', ' + assignedToValue + '))';
-    return code;
-  },
-  customFields: {},
+    this.setColour(230);
+    this.setTooltip("Create a new task");
+    this.setHelpUrl("");
+  }
 };
 
-Blockly.Blocks['update_task_info'] = {
-  init: function() {
-    this.setColour(160);
-    this.appendValueInput('task_id').setCheck('Number').appendField('Update Task Info: Task ID');
-    this.appendValueInput('name').setCheck('String').appendField('Name (Optional)');
-    this.appendValueInput('description').setCheck('String').appendField('Description (Optional)');
-    this.appendValueInput('due_date').setCheck('String').appendField('Due Date (Optional)');
-    this.appendValueInput('assigned_to').setCheck('String').appendField('Assigned To (Optional)');
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-  },
-  generateCode: function(workspace) {
-    var dbConnectionName = Blockly.Python.variable('dbConnection');
-    var taskIdValue = Blockly.Python.valueToCode(workspace, 'task_id', Blockly.Python.ORDER_ASSIGNMENT);
-    var nameValue = Blockly.Python.valueToCode(workspace, 'name', Blockly.Python.ORDER_ASSIGNMENT);
-    var descriptionValue = Blockly.Python.valueToCode(workspace, 'description', Blockly.Python.ORDER_ASSIGNMENT);
-    var dueDateValue = Blockly.Python.valueToCode(workspace, 'due_date', Blockly.Python.ORDER_ASSIGNMENT);
-    var assignedToValue = Blockly.Python.valueToCode(workspace, 'assigned_to', Blockly.Python.ORDER_ASSIGNMENT);
+Blockly.JavaScript['create_task'] = function(block) {
+  var taskName = Blockly.JavaScript.valueToCode(block, 'task_name', Blockly.JavaScript.ORDER_NONE) || "''";
+  var taskDescription = Blockly.JavaScript.valueToCode(block, 'task_description', Blockly.JavaScript.ORDER_NONE) || "''";
+  var dueDate = Blockly.JavaScript.valueToCode(block, 'due_date', Blockly.JavaScript.ORDER_NONE) || "null";
 
-    var code = 'dbConnection.execute("UPDATE task SET name = ' + nameValue + ', description = ' + descriptionValue + ', due_date = ' + dueDateValue + ', assigned_to = ' + assignedToValue + ' WHERE id = ' + taskIdValue + '")';
+  // Generate JavaScript code to create a task object
+  var code = `{
+    name: ${taskName},
+    description: ${taskDescription},
+    dueDate: ${dueDate}
+  }`;
+
+  // Generate SQL insert statement
+  var insertStatement = `INSERT INTO tasks (name, description, due_date) VALUES (${taskName}, ${taskDescription}, ${dueDate})`;
+
+  // Log the SQL insert statement
+  console.log('Generated SQL insert statement:', insertStatement);
+
+  // Insert the task into the SQLite database
+  db.run(insertStatement);
+  return code;
+};
+
+// Other Blockly blocks remain unchanged
+Blockly.Blocks['text'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldTextInput(""), "TEXT");
+    this.setOutput(true, "String");
+    this.setColour(160);
+    this.setTooltip("");
+    this.setHelpUrl("");
+  }
+};
+  
+  // Define the "assign_task" block
+  Blockly.Blocks['assign_task'] = {
+    init: function() {
+      this.appendDummyInput()
+          .appendField("Assign Task");
+      this.appendValueInput("task")
+          .setCheck(null)
+          .appendField("Task");
+      this.appendValueInput("user")
+          .setCheck(null)
+          .appendField("User");
+      this.setPreviousStatement(true, null);
+      this.setNextStatement(true, null);
+      this.setColour(230);
+      this.setTooltip("Assign a task to a user");
+      this.setHelpUrl("");
+    }
+  };
+  Blockly.JavaScript['assign_task'] = function(block) {
+    var taskName = Blockly.JavaScript.valueToCode(block, 'task', Blockly.JavaScript.ORDER_NONE) || "''";
+    var user = Blockly.JavaScript.valueToCode(block, 'user', Blockly.JavaScript.ORDER_NONE) || "''";
+  
+    // Generate JavaScript code to create a task object
+    var code = `{
+      task: ${taskName},
+      user: ${user}
+    }`;
+  
     return code;
-  },
-  customFields: {},
+  };
+  
+  // Define the "set_dependency" block
+  Blockly.Blocks['set_dependency'] = {
+    init: function() {
+      this.appendDummyInput()
+          .appendField("Set Dependency");
+      this.appendValueInput("dependent_task")
+          .setCheck(null)
+          .appendField("Dependent Task");
+      this.appendValueInput("dependency_task")
+          .setCheck(null)
+          .appendField("Dependency Task");
+      this.setPreviousStatement(true, null);
+      this.setNextStatement(true, null);
+      this.setColour(230);
+      this.setTooltip("Set a dependency between tasks");
+      this.setHelpUrl("");
+    }
+  };
+  Blockly.JavaScript['set_dependency'] = function(block) {
+    var dep_task = Blockly.JavaScript.valueToCode(block, 'dependent_task', Blockly.JavaScript.ORDER_NONE) || "''";
+    var dependency = Blockly.JavaScript.valueToCode(block, 'dependency_task', Blockly.JavaScript.ORDER_NONE) || "''";
+  
+    // Generate JavaScript code to create a task object
+    var code = `{
+      dependent task: ${dep_task},
+      dependency task: ${dependency}
+    }`;
+  
+    return code;
+  };
+  
+  // Define the "update_task_status" block
+  Blockly.Blocks['update_task_status'] = {
+    init: function() {
+      this.appendDummyInput()
+          .appendField("Update Task Status");
+      this.appendValueInput("task")
+          .setCheck(null)
+          .appendField("Task");
+      this.appendValueInput("status")
+          .setCheck(null)
+          .appendField("Status");
+      this.setPreviousStatement(true, null);
+      this.setNextStatement(true, null);
+      this.setColour(230);
+      this.setTooltip("Update the status of a task");
+      this.setHelpUrl("");
+    }
+  };
+  Blockly.JavaScript['update_task_status'] = function(block) {
+    var task_name = Blockly.JavaScript.valueToCode(block, 'task', Blockly.JavaScript.ORDER_NONE) || "''";
+    var status = Blockly.JavaScript.valueToCode(block, 'status', Blockly.JavaScript.ORDER_NONE) || "''";
+  
+    // Generate JavaScript code to create a task object
+    var code = `{
+      task: ${task_name},
+      status: ${status}
+    }`;
+
+    //var displayCode = 'console.log(\'${code}\');';
+
+    return code;
+  };
+  
+  
+  // Define the "filter_tasks" block
+  Blockly.Blocks['filter_tasks'] = {
+    init: function() {
+      this.appendDummyInput()
+          .appendField("Filter Tasks");
+      this.appendValueInput("criteria")
+          .setCheck(null)
+          .appendField("Criteria");
+      this.setOutput(true, null);
+      this.setColour(210);
+      this.setTooltip("Filter tasks based on criteria");
+      this.setHelpUrl("");
+    }
+  };
+  
+  // Define the "sort_tasks" block
+  Blockly.Blocks['sort_tasks'] = {
+    init: function() {
+      this.appendDummyInput()
+          .appendField("Sort Tasks");
+      this.appendValueInput("criteria")
+          .setCheck(null)
+          .appendField("Criteria");
+      this.setOutput(true, null);
+      this.setColour(210);
+      this.setTooltip("Sort tasks based on criteria");
+      this.setHelpUrl("");
+    }
+  };
+  
+// Define the "date" block
+Blockly.Blocks['custom_date'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Date:");
+
+    // Dropdown for Month
+    var monthOptions = [
+      ["January", "0"],
+      ["February", "1"],
+      ["March", "2"],
+      ["April", "3"],
+      ["May", "4"],
+      ["June", "5"],
+      ["July", "6"],
+      ["August", "7"],
+      ["September", "8"],
+      ["October", "9"],
+      ["November", "10"],
+      ["December", "11"]
+    ];
+    this.appendDummyInput()
+        .appendField("Month")
+        .appendField(new Blockly.FieldDropdown(monthOptions), "MONTH");
+
+    // Dropdown for Day
+    var dayOptions = [];
+    for (var i = 1; i <= 31; i++) {
+      dayOptions.push([i.toString(), i.toString()]);
+    }
+    this.appendDummyInput()
+        .appendField("Day")
+        .appendField(new Blockly.FieldDropdown(dayOptions), "DAY");
+
+    // Text field for Year
+    this.appendDummyInput()
+        .appendField("Year")
+        .appendField(new Blockly.FieldTextInput('2023'), 'YEAR');
+
+    this.setOutput(true, "Date");
+    this.setColour(230);
+    this.setTooltip("Create a custom date.");
+  }
+};
+
+Blockly.JavaScript['custom_date'] = function(block) {
+  var month = block.getFieldValue('MONTH');
+  var day = block.getFieldValue('DAY');
+  var year = block.getFieldValue('YEAR');
+
+  // Generate JavaScript code to create a Date object
+  var code = `new Date(${year}, ${month}, ${day})`;
+
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+// After using Blockly to define your tasks, you can query the database to retrieve and display tasks
+// For example, you can add a "retrieve_tasks" block:
+
+Blockly.Blocks['retrieve_tasks'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Retrieve Tasks");
+    this.setOutput(true, "Array");
+    this.setColour(210);
+    this.setTooltip("Retrieve tasks from the database");
+    this.setHelpUrl("");
+  }
+};
+
+Blockly.JavaScript['retrieve_tasks'] = function(block) {
+  // Query all tasks from the database
+  db.all('SELECT * FROM tasks', [], (err, rows) => {
+    if (err) {
+      throw err;
+    }
+    const tasks = rows.map(row => ({
+      name: row.name,
+      description: row.description,
+      dueDate: row.due_date
+    }));
+    // Return the tasks as JavaScript code
+    const code = JSON.stringify(tasks);
+    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+  });
 };

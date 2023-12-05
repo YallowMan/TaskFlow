@@ -1,103 +1,106 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>TaskFlow</title>
-  <script src="https://unpkg.com/blockly/blockly_compressed.js"></script>
-  <script src="https://unpkg.com/blockly/blocks_compressed.js"></script>
-  <script src="https://unpkg.com/blockly/javascript_compressed.js"></script>
-  <script src="https://unpkg.com/blockly/python_compressed.js"></script>
-  <script src="./custom_blocks.js"></script>
-  <link rel="stylesheet" type="text/css" href="styles.css">
+    <title>TaskFlow</title>
+    <script src="https://unpkg.com/blockly/blockly.min.js"></script>
+    <script src="./custom_blocks.js"></script>
+    <!-- Include Blockly JavaScript generator -->
+    <!-- <script src="https://unpkg.com/blockly/blocks_compressed.js"></script> -->
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-  <table>
-    <tr>
-      <td id="blocklyArea">
-      </td>
-    </tr>
-  </table>
+    <!-- Resizable Table and Blockly div code sourced from Google. -->
+    <table>
+      <tr>
+        <td id="blocklyArea">
+        </td>
+      </tr>
+    </table>
 
-  <div id="blocklyDiv" style="position: absolute"></div>
+    <div id="blocklyDiv" style="position: absolute"></div>
 
-  <xml id="toolbox" style="display: none;">
-    <category name="Tasks">
-      <block type="initialize_database"></block>
-      <block type="create_task"></block>
-      <block type="update_task_info"></block>
-    </category>
-    <category name="Filters">
-      <block type="filter_tasks"></block>
-      <block type="sort_tasks"></block>
-    </category>
-    <category name="Text">
-      <block type="text"></block>
-      <block type="custom_date"></block>
-    </category>
-  </xml>
+    <!-- FIXME: Remove this old blockly div code when no longer needed. -->
+    <!-- <div id="blocklyDiv" style="height: 480px; width: 600px;"></div> -->
 
-  <div class="row button-row">
-    <button onclick="generateCode()">Generate JavaScript</button>
-    <button onclick="runCode()">Run JavaScript</button>
-    <button onclick="saveBlocks()">Save Blocks</button>
-    <button onclick="loadBlocks()">Load Blocks</button>
-    <button onclick="saveCode()">Save Code</button>
-    <input type="file" id="loadInput" style="display: none;" onchange="loadBlocksFile(event)">
-  </div>
+    <!-- toolbox -->
+    <xml id="toolbox" style="display: none;">
+      <category name="Tasks">
+        <block type="create_task"></block>
+        <block type="assign_task"></block>
+        <block type="set_dependency"></block>
+        <block type="update_task_status"></block>
+      </category>
+      <category name="Filters">
+        <block type="filter_tasks"></block>
+        <block type="sort_tasks"></block>
+      </category>
+      <category name="Text">
+        <block type="text"></block>
+        <block type="custom_date"></block>
+      </category>
+    </xml>
 
-  <div class="row">
-    <div id="codeDiv" class="half-width"></div>
-    <div id="outputDiv" class="half-width"></div>
-  </div>
+    <div class="row button-row">
+        <button onclick="generateCode()">Generate JavaScript</button>
+        <button onclick="runCode()">Run JavaScript</button>
+        <button onclick="saveBlocks()">Save Blocks</button>
+        <button onclick="loadBlocks()">Load Blocks</button>
+        <button onclick="saveCode()">Save Code</button>
+        <input type="file" id="loadInput" style="display: none;" onchange="loadBlocksFile(event)">
+    </div>
 
-  <script>
-    // FIXME: Delete this old Blockly injection code when unneeded.
-    // var workspace = Blockly.inject('blocklyDiv', {
-    //   toolbox: document.getElementById('toolbox'),
-    //   scrollbars: true
-    // });
+    <div class="row">
+        <div id="codeDiv" class="half-width"></div>
+        <div id="outputDiv" class="half-width"></div>
+    </div>
 
-    // Resizable Blockly injection code from Google.
-    var blocklyArea = document.getElementById('blocklyArea');
-    var blocklyDiv = document.getElementById('blocklyDiv');
-    var workspace = Blockly.inject(blocklyDiv, {
-      media: 'https://unpkg.com/browse/blockly@10.2.2/media/',
-      toolbox: document.getElementById('toolbox')
-    });
-    var onresize = function(e) {
-      // Compute the absolute coordinates and dimensions of blocklyArea.
-      var element = blocklyArea;
-      var x = 0;
-      var y = 0;
-      do {
-        x += element.offsetLeft;
-        y += element.offsetTop;
-        element = element.offsetParent;
-      } while (element);
-      // Position blocklyDiv over blocklyArea.
-      blocklyDiv.style.left = x + 'px';
-      blocklyDiv.style.top = y + 'px';
-      blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
-      blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';
-      Blockly.svgResize(workspace);
-    };
+    <script>
+        // FIXME: Delete this old Blockly injection code when unneeded.
+        // var workspace = Blockly.inject('blocklyDiv', {
+        //   toolbox: document.getElementById('toolbox'),
+        //   scrollbars: true
+        // });
 
-    // Sourced from Google: Resize Blockly.
-    window.addEventListener('resize', onresize, false);
-    onresize();
+        // Resizable Blockly injection code from Google.
+        var blocklyArea = document.getElementById('blocklyArea');
+        var blocklyDiv = document.getElementById('blocklyDiv');
+        var workspace = Blockly.inject(blocklyDiv,
+            {media: 'https://unpkg.com/browse/blockly@10.2.2/media/',
+            toolbox: document.getElementById('toolbox')});
+        var onresize = function(e) {
+          // Compute the absolute coordinates and dimensions of blocklyArea.
+          var element = blocklyArea;
+          var x = 0;
+          var y = 0;
+          do {
+            x += element.offsetLeft;
+            y += element.offsetTop;
+            element = element.offsetParent;
+          } while (element);
+          // Position blocklyDiv over blocklyArea.
+          blocklyDiv.style.left = x + 'px';
+          blocklyDiv.style.top = y + 'px';
+          blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
+          blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';
+          Blockly.svgResize(workspace);
+        };
 
-    // Function to generate code
-    function generateCode() {
-      python.pythonGenerator.INFINITE_LOOP_TRAP = null;
-      var code = python.pythonGenerator.workspaceToCode(workspace);
-      document.getElementById('codeDiv').innerText = code;
-    }
+        // Sourced from Google: Resize Blockly.
+        window.addEventListener('resize', onresize, false);
+        onresize();
 
-    function runCode() {
-      var code = Blockly.JavaScript.workspaceToCode(workspace);
-      console.log(code);
-      try {
-        var output = eval(code);
-        document.getElementById('outputDiv').innerText = output;
+        // Function to generate code
+        function generateCode() {
+            var code = Blockly.JavaScript.workspaceToCode(workspace);
+            document.getElementById('codeDiv').innerText = code;
+        }
+
+        function runCode() {
+          var code = Blockly.JavaScript.workspaceToCode(workspace);
+            console.log(code); 
+          try {
+              var output = eval(code);
+              document.getElementById('outputDiv').innerText = output;
           } catch (e) {
               document.getElementById('outputDiv').innerText = 'Error: ' + e;
           }

@@ -87,7 +87,8 @@
 
     // Function to generate code
     function generateCode() {
-      var code = Blockly.JavaScript.workspaceToCode(workspace);
+      python.pythonGenerator.INFINITE_LOOP_TRAP = null;
+      var code = python.pythonGenerator.workspaceToCode(workspace);
       document.getElementById('codeDiv').innerText = code;
     }
 

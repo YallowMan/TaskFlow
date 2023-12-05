@@ -5,7 +5,7 @@ Blockly.Blocks['initialize_database'] = {
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
   },
-  genCode: function(workspace) {
+  generateCode: function(workspace) {
     var dbConnectionName = Blockly.Python.variableDeclaration('dbConnection', 'sqlite3.connect("TaskManager.db")');
     return dbConnectionName;
   },
@@ -22,7 +22,7 @@ Blockly.Blocks['create_task'] = {
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
   },
-  genCode: function(workspace) {
+  generateCode: function(workspace) {
     var dbConnectionName = Blockly.Python.variable('dbConnection');
     var nameValue = Blockly.Python.valueToCode(workspace, 'name', Blockly.Python.ORDER_ASSIGNMENT);
     var descriptionValue = Blockly.Python.valueToCode(workspace, 'description', Blockly.Python.ORDER_ASSIGNMENT);
@@ -46,7 +46,7 @@ Blockly.Blocks['update_task_info'] = {
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
   },
-  genCode: function(workspace) {
+  generateCode: function(workspace) {
     var dbConnectionName = Blockly.Python.variable('dbConnection');
     var taskIdValue = Blockly.Python.valueToCode(workspace, 'task_id', Blockly.Python.ORDER_ASSIGNMENT);
     var nameValue = Blockly.Python.valueToCode(workspace, 'name', Blockly.Python.ORDER_ASSIGNMENT);

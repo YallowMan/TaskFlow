@@ -1,112 +1,61 @@
 Blockly.Blocks['initialize_database'] = {
   init: function() {
-    this.appendDummyInput()
-        .appendField("Initialize Database");
+    this.setColour(230);
+    this.appendDummyInput('Name').appendField('Initialize Database');
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(230);
-    this.setTooltip("Initialize the SQLite database");
-    this.setHelpUrl("");
-  }
+  },
+  genCode: function(workspace) {
+    var dbConnectionName = Blockly.Python.variableDeclaration('dbConnection', 'sqlite3.connect("TaskManager.db")');
+    return dbConnectionName;
+  },
+  customFields: {},
 };
 
 Blockly.Blocks['create_task'] = {
   init: function() {
-    this.appendDummyInput()
-        .appendField("Create Task");
-    this.appendValueInput("task_name")
-        .setCheck("String")
-        .appendField("Name");
-    this.appendValueInput("task_description")
-        .setCheck("String")
-        .appendField("Description");
-    this.appendValueInput("due_date")
-        .setCheck("String")
-        .appendField("Due Date");
-    this.appendValueInput("assigned_person")
-        .setCheck("String")
-        .appendField("Assigned Person");
-    this.setInputsInline(false);
+    this.setColour(300);
+    this.appendValueInput('name').setCheck('String').appendField('Create Task: Name');
+    this.appendValueInput('description').setCheck('String').appendField('Description');
+    this.appendValueInput('due_date').setCheck('String').appendField('Due Date');
+    this.appendValueInput('assigned_to').setCheck('String').appendField('Assigned To');
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(180);
-    this.setTooltip("Create a new task in the database");
-    this.setHelpUrl("");
-  }
+  },
+  genCode: function(workspace) {
+    var dbConnectionName = Blockly.Python.variable('dbConnection');
+    var nameValue = Blockly.Python.valueToCode(workspace, 'name', Blockly.Python.ORDER_ASSIGNMENT);
+    var descriptionValue = Blockly.Python.valueToCode(workspace, 'description', Blockly.Python.ORDER_ASSIGNMENT);
+    var dueDateValue = Blockly.Python.valueToCode(workspace, 'due_date', Blockly.Python.ORDER_ASSIGNMENT);
+    var assignedToValue = Blockly.Python.valueToCode(workspace, 'assigned_to', Blockly.Python.ORDER_ASSIGNMENT);
+
+    var code = 'dbConnection.execute("INSERT INTO task (name, description, due_date, assigned_to) VALUES (?, ?, ?, ?)", (' + nameValue + ', ' + descriptionValue + ', ' + dueDateValue + ', ' + assignedToValue + '))';
+    return code;
+  },
+  customFields: {},
 };
 
-Blockly.Blocks['update_task'] = {
+Blockly.Blocks['update_task_info'] = {
   init: function() {
-    this.appendDummyInput()
-        .appendField("Update Task");
-    this.appendValueInput("task_id")
-        .setCheck("Number")
-        .appendField("Task ID");
-    this.appendValueInput("new_description")
-        .setCheck("String")
-        .appendField("New Description");
-    this.appendValueInput("new_due_date")
-        .setCheck("String")
-        .appendField("New Due Date");
-    this.appendValueInput("new_assigned_person")
-        .setCheck("String")
-        .appendField("New Assigned Person");
-    this.setInputsInline(false);
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour(270);
-    this.setTooltip("Update task information in the database");
-    this.setHelpUrl("");
-  }
-};
-
-Blockly.JavaScript['initialize_database'] = function(block) {
-  // Generate JavaScript code to initialize the SQLite database
-  var code = `
-    // Code to initialize the SQLite database
-    // Example: var db = openDatabase('mydb', '1.0', 'My first database', 2 * 1024 * 1024);
-  `;
-  return code;
-};
-
-Blockly.JavaScript['create_task'] = function(block) {
-  var taskName = Blockly.JavaScript.valueToCode(block, 'task_name', Blockly.JavaScript.ORDER_ATOMIC);
-  var taskDescription = Blockly.JavaScript.valueToCode(block, 'task_description', Blockly.JavaScript.ORDER_ATOMIC);
-  var dueDate = Blockly.JavaScript.valueToCode(block, 'due_date', Blockly.JavaScript.ORDER_ATOMIC);
-  var assignedPerson = Blockly.JavaScript.valueToCode(block, 'assigned_person', Blockly.JavaScript.ORDER_ATOMIC);
-
-  // Generate JavaScript code to create a task in the SQLite database
-  var code = `
-   db.transaction(function(tx) {
-    //   tx.executeSql('INSERT INTO tasks (name, description, due_date, assigned_person) VALUES (${taskName}, ${taskDescription}, ${dueDate}, ${assignedPerson})');
-    // });
-  `;
-  return code;
-};
-
-Blockly.Blocks['text'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField(new Blockly.FieldTextInput(""), "TEXT");
-    this.setOutput(true, "String");
     this.setColour(160);
-    this.setTooltip("");
-    this.setHelpUrl("");
-  }
+    this.appendValueInput('task_id').setCheck('Number').appendField('Update Task Info: Task ID');
+    this.appendValueInput('name').setCheck('String').appendField('Name (Optional)');
+    this.appendValueInput('description').setCheck('String').appendField('Description (Optional)');
+    this.appendValueInput('due_date').setCheck('String').appendField('Due Date (Optional)');
+    this.appendValueInput('assigned_to').setCheck('String').appendField('Assigned To (Optional)');
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+  },
+  genCode: function(workspace) {
+    var dbConnectionName = Blockly.Python.variable('dbConnection');
+    var taskIdValue = Blockly.Python.valueToCode(workspace, 'task_id', Blockly.Python.ORDER_ASSIGNMENT);
+    var nameValue = Blockly.Python.valueToCode(workspace, 'name', Blockly.Python.ORDER_ASSIGNMENT);
+    var descriptionValue = Blockly.Python.valueToCode(workspace, 'description', Blockly.Python.ORDER_ASSIGNMENT);
+    var dueDateValue = Blockly.Python.valueToCode(workspace, 'due_date', Blockly.Python.ORDER_ASSIGNMENT);
+    var assignedToValue = Blockly.Python.valueToCode(workspace, 'assigned_to', Blockly.Python.ORDER_ASSIGNMENT);
+
+    var code = 'dbConnection.execute("UPDATE task SET name = ' + nameValue + ', description = ' + descriptionValue + ', due_date = ' + dueDateValue + ', assigned_to = ' + assignedToValue + ' WHERE id = ' + taskIdValue + '")';
+    return code;
+  },
+  customFields: {},
 };
-
-Blockly.JavaScript['update_task'] = function(block) {
-  var taskId = Blockly.JavaScript.valueToCode(block, 'task_id', Blockly.JavaScript.ORDER_ATOMIC);
-  var newDescription = Blockly.JavaScript.valueToCode(block, 'new_description', Blockly.JavaScript.ORDER_ATOMIC);
-  var newDueDate = Blockly.JavaScript.valueToCode(block, 'new_due_date', Blockly.JavaScript.ORDER_ATOMIC);
-  var newAssignedPerson = Blockly.JavaScript.valueToCode(block, 'new_assigned_person', Blockly.JavaScript.ORDER_ATOMIC);
-
-  // Generate JavaScript code to update task information in the SQLite database
-  var code = `
-    // Code to update task information in the SQLite database
-    db.transaction(function(tx) {  tx.executeSql('UPDATE tasks SET description = ${newDescription}, due_date = ${newDueDate}, assigned_person = ${newAssignedPerson} WHERE id = ${taskId}');
-  });
-  `;
-  return code;
-};
-

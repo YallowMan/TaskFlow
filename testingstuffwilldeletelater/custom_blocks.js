@@ -96,16 +96,25 @@ Blockly.Blocks['initializeDB'] = {
     code += '    description TEXT,\n';
     code += '    dueDate DATE,\n';
     code += '    assignedTo VARCHAR(60)\n';
-    code += ')\;\'\'\')\n';
-
-  
-  
+    code += ');\n';
   //Closes the SQL connection after commiting
     code += 'connection.commit()\n';
     code += 'connection.close()\n\n';
   
     return code;
   };
+
+  python.pythonGenerator.forBlock['restartDB'] = function(block) {
+  // Follow the general formatting of initializeDB to write the code to delete every entry within the three tables ordersList, foodOrders, & drinkOrders
+  code += 'connection = sqlite3.connect(db_file_path)\n';
+  code += 'cursor = connection.cursor()\n';
+
+
+
+  code += 'connection.commit()\n';
+  code += 'connection.close()\n\n';
+  return [code]
+}
 
   Blockly.Python['addTask'] = function(block) {
     var taskName = block.getFieldValue('task_name');
@@ -123,19 +132,19 @@ Blockly.Blocks['initializeDB'] = {
   };
 
   
-  Blockly.Python['updateTask'] = function(block) {
+  Blockly.Python['updateTask'] = function (block) {
     var taskID = block.getFieldValue('task_id');
     var newName = block.getFieldValue('new_name');
     var newDescription = block.getFieldValue('new_description');
     var newDueDate = block.getFieldValue('new_due_date');
     var newAssignTo = Blockly.Python.valueToCode(block, 'new_assignTo', Blockly.Python.ORDER_ATOMIC);
-  
+
     var code = 'connection = sqlite3.connect(db_file_path)\n';
     code += 'cursor = connection.cursor()\n\n';
     code += 'cursor.execute("UPDATE tasks SET name=?, description=?, dueDate=?, assignedTo=? WHERE taskID=?", ("' + newName + '", "' + newDescription + '", "' + newDueDate + '", "' + newAssignTo + '", ' + taskID + '))\n';
     code += 'connection.commit()\n';
     code += 'connection.close()\n\n';
-  
+
     return code;
-  };
+};
   

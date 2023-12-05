@@ -77,12 +77,22 @@ Blockly.JavaScript['create_task'] = function(block) {
 
   // Generate JavaScript code to create a task in the SQLite database
   var code = `
-    // Code to create a task in the SQLite database
-    // Example: db.transaction(function(tx) {
+   db.transaction(function(tx) {
     //   tx.executeSql('INSERT INTO tasks (name, description, due_date, assigned_person) VALUES (${taskName}, ${taskDescription}, ${dueDate}, ${assignedPerson})');
     // });
   `;
   return code;
+};
+
+Blockly.Blocks['text'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldTextInput(""), "TEXT");
+    this.setOutput(true, "String");
+    this.setColour(160);
+    this.setTooltip("");
+    this.setHelpUrl("");
+  }
 };
 
 Blockly.JavaScript['update_task'] = function(block) {
@@ -94,9 +104,8 @@ Blockly.JavaScript['update_task'] = function(block) {
   // Generate JavaScript code to update task information in the SQLite database
   var code = `
     // Code to update task information in the SQLite database
-    // Example: db.transaction(function(tx) {
-    //   tx.executeSql('UPDATE tasks SET description = ${newDescription}, due_date = ${newDueDate}, assigned_person = ${newAssignedPerson} WHERE id = ${taskId}');
-    // });
+    db.transaction(function(tx) {  tx.executeSql('UPDATE tasks SET description = ${newDescription}, due_date = ${newDueDate}, assigned_person = ${newAssignedPerson} WHERE id = ${taskId}');
+  });
   `;
   return code;
 };

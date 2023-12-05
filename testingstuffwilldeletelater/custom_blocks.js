@@ -100,3 +100,37 @@ Blockly.JavaScript['update_task'] = function(block) {
   `;
   return code;
 };
+
+Blockly.Blocks['input_task_info'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Task Information");
+    this.appendValueInput("task_name")
+        .setCheck("String")
+        .appendField("Name");
+    this.appendValueInput("task_description")
+        .setCheck("String")
+        .appendField("Description");
+    this.appendValueInput("due_date")
+        .setCheck("String")
+        .appendField("Due Date");
+    this.appendValueInput("assigned_person")
+        .setCheck("String")
+        .appendField("Assigned Person");
+    this.setOutput(true, "TaskInfo");
+    this.setColour(230);
+    this.setTooltip("Input task information");
+    this.setHelpUrl("");
+  }
+};
+
+Blockly.JavaScript['input_task_info'] = function(block) {
+  var taskName = Blockly.JavaScript.valueToCode(block, 'task_name', Blockly.JavaScript.ORDER_ATOMIC);
+  var taskDescription = Blockly.JavaScript.valueToCode(block, 'task_description', Blockly.JavaScript.ORDER_ATOMIC);
+  var dueDate = Blockly.JavaScript.valueToCode(block, 'due_date', Blockly.JavaScript.ORDER_ATOMIC);
+  var assignedPerson = Blockly.JavaScript.valueToCode(block, 'assigned_person', Blockly.JavaScript.ORDER_ATOMIC);
+
+  // Generate JavaScript code to return the task information as an object
+  var code = `{ name: ${taskName}, description: ${taskDescription}, dueDate: ${dueDate}, assignedPerson: ${assignedPerson} }`;
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};

@@ -1,75 +1,142 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Task Management System</title>
+  <title>TaskFlow</title>
   <script src="https://unpkg.com/blockly/blockly.min.js"></script>
-  <script src="custom_blocks.js"></script>
+  <script src="./custom_blocks.js"></script>
+  <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-  <div id="blocklyWorkspace"></div>
+  <table>
+    <tr>
+      <td id="blocklyArea">
+      </td>
+    </tr>
+  </table>
+
+  <div id="blocklyDiv" style="position: absolute"></div>
+
+  <xml id="toolbox" style="display: none;">
+    <category name="Tasks">
+      <block type="initialize_database"></block>
+      <block type="create_task"></block>
+      <block type="update_task_info"></block>
+    </category>
+    <category name="Filters">
+      <block type="filter_tasks"></block>
+      <block type="sort_tasks"></block>
+    </category>
+    <category name="Text">
+      <block type="text"></block>
+      <block type="custom_date"></block>
+    </category>
+  </xml>
+
+  <div class="row button-row">
+    <button onclick="generateCode()">Generate JavaScript</button>
+    <button onclick="runCode()">Run JavaScript</button>
+    <button onclick="saveBlocks()">Save Blocks</button>
+    <button onclick="loadBlocks()">Load Blocks</button>
+    <button onclick="saveCode()">Save Code</button>
+    <input type="file" id="loadInput" style="display: none;" onchange="loadBlocksFile(event)">
+  </div>
+
+  <div class="row">
+    <div id="codeDiv" class="half-width"></div>
+    <div id="outputDiv" class="half-width"></div>
+  </div>
+
   <script>
-    var workspace = Blockly.inject('blocklyWorkspace', {
-      toolbox: Blockly.Toolbox.createXml('<xml></xml>'),
-      scrollbars: true
+    // FIXME: Delete this old Blockly injection code when unneeded.
+    // var workspace = Blockly.inject('blocklyDiv', {
+    //   toolbox: document.getElementById('toolbox'),
+    //   scrollbars: true
+    // });
+
+    // Resizable Blockly injection code from Google.
+    var blocklyArea = document.getElementById('blocklyArea');
+    var blocklyDiv = document.getElementById('blocklyDiv');
+    var workspace = Blockly.inject(blocklyDiv, {
+      media: 'https://unpkg.com/browse/blockly@10.2.2/media/',
+      toolbox: document.getElementById('toolbox')
     });
+    var onresize = function(e) {
+      // Compute the absolute coordinates and dimensions of blocklyArea.
+      var element = blocklyArea;
+      var x = 0;
+      var y = 0;
+      do {
+        x += element.offsetLeft;
+        y += element.offsetTop;
+        element = element.offsetParent;
+      } while (element);
+      // Position blocklyDiv over blocklyArea.
+      blocklyDiv.style.left = x + 'px';
+      blocklyDiv.style.top = y + 'px';
+      blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
+      blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';
+      Blockly.svgResize(workspace);
+    };
 
-    // Initialize database connection when 'Initialize Database' block is executed
-    Blockly.addChangeListener(function(event) {
-      if (event.type == Blockly.Events.BLOCK_CHANGE && event.block.type == 'initialize_database') {
-        // Replace 'tasks.db' with the actual path to your SQLite database file
-        var dbConnection = new sqlite3.Database('tasks.db');
-        workspace.getVariable('dbConnection').setValue(dbConnection);
-      }
-    });
+    // Sourced from Google: Resize Blockly.
+    window.addEventListener('resize', onresize, false);
+    onresize();
 
-    // Create task when 'Create Task' block is executed
-    Blockly.addChangeListener(function(event) {
-      if (event.type == Blockly.Events.BLOCK_CHANGE && event.block.type == 'create_task') {
-        var dbConnection = workspace.getVariable('dbConnection').getValue();
-        var name = event.block.getFieldValue('name');
-        var description = event.block.getFieldValue('description');
-        var dueDate = event.block.getFieldValue('due_date');
-        var assignedTo = event.block.getFieldValue('assigned_to');
-
-        dbConnection.execute('INSERT INTO task (name, description, due_date, assigned_to) VALUES (?, ?, ?, ?)',
-          [name, description, dueDate, assignedTo]);
-      }
-    });
-
-    Blockly.addChangeListener(function(event) {
-  if (event.type == Blockly.Events.BLOCK_CHANGE && event.block.type == 'update_task_info') {
-    var dbConnection = workspace.getVariable('dbConnection').getValue();
-    var taskId = event.block.getFieldValue('task_id');
-    var name = event.block.getFieldValue('name');
-    var description = event.block.getFieldValue('description');
-    var dueDate = event.block.getFieldValue('due_date');
-    var assignedTo = event.block.getFieldValue('assigned_to');
-
-    var updateStatement = 'UPDATE task SET ';
-    var updatedFields = [];
-
-    if (name) {
-      updatedFields.push('name = ' + name);
+    // Function to generate code
+    function generateCode() {
+      var code = Blockly.JavaScript.workspaceToCode(workspace);
+      document.getElementById('codeDiv').innerText = code;
     }
 
-    if (description) {
-      updatedFields.push('description = ' + description);
-    }
+    function runCode() {
+      var code = Blockly.JavaScript.workspaceToCode(workspace);
+      console.log(code);
+      try {
+        var output = eval(code);
+        document.getElementById('outputDiv').innerText = output;
+          } catch (e) {
+              document.getElementById('outputDiv').innerText = 'Error: ' + e;
+          }
+        }
 
-    if (dueDate) {
-      updatedFields.push('due_date = ' + dueDate);
-    }
+        function saveBlocks() {
+            var xml = Blockly.Xml.workspaceToDom(workspace);
+            var xmlText = Blockly.Xml.domToPrettyText(xml);
+            var blob = new Blob([xmlText], {type: 'text/xml'});
+            var a = document.createElement('a');
+            a.download = 'blocks.xml';
+            a.href = URL.createObjectURL(blob);
+            a.click();
+        }
 
-    if (assignedTo) {
-      updatedFields.push('assigned_to = ' + assignedTo);
-    }
+        function loadBlocks() {
+            document.getElementById('loadInput').click();
+        }
 
-    updateStatement += updatedFields.join(', ') + ' WHERE id = ' + taskId;
+        function loadBlocksFile(event) {
+            var file = event.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var xml = Blockly.utils.xml.textToDom(e.target.result);
+                Blockly.Xml.appendDomToWorkspace(xml, workspace);
+            };
+            reader.readAsText(file);
+        }
+        function saveCode() {
+            // Generate JavaScript code using your Blockly custom block
+            var code = Blockly.JavaScript.workspaceToCode(workspace);
 
-    dbConnection.execute(updateStatement);
-  }
-});
-  </script>
+            // Create a Blob with the code content
+            var blob = new Blob([code], { type: 'text/javascript' });
+
+            // Create a link to download the Blob
+            var a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'generated_code.js';
+
+            // Trigger a click event on the link to initiate the download
+            a.click();
+        }
+    </script>
 </body>
 </html>
-

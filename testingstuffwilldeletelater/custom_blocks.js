@@ -1,3 +1,4 @@
+
 // Define the "create_task" block
 Blockly.Blocks['create_task'] = {
   init: function() {
@@ -13,18 +14,27 @@ Blockly.Blocks['create_task'] = {
     this.appendValueInput('DUE_DATE')
         .setCheck('Date')
         .appendField('Due Date');
+    this.appendValueInput('ASSIGNEE')
+        .setCheck('String')
+        .appendField('Assignee');
+    this.appendValueInput('STATUS')
+        .setCheck('String')
+        .appendField('Status');
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour('#89CFF0'); // light blue
     this.setTooltip('Insert a new task into the table');
   }
 };
+
 Blockly.JavaScript['create_task'] = function(block) {
   var taskName = Blockly.JavaScript.valueToCode(block, 'TASK_NAME', Blockly.JavaScript.ORDER_ATOMIC);
   var description = Blockly.JavaScript.valueToCode(block, 'DESCRIPTION', Blockly.JavaScript.ORDER_ATOMIC);
   var dueDate = Blockly.JavaScript.valueToCode(block, 'DUE_DATE', Blockly.JavaScript.ORDER_ATOMIC);
+  var assignee = Blockly.JavaScript.valueToCode(block, 'ASSIGNEE', Blockly.JavaScript.ORDER_ATOMIC);
+  var status = Blockly.JavaScript.valueToCode(block, 'STATUS', Blockly.JavaScript.ORDER_ATOMIC);
 
-  return `INSERT INTO Tasks (TaskName, Description, DueDate) VALUES (${taskName}, ${description}, ${dueDate});`;
+  return `INSERT INTO Tasks (TaskName, Description, DueDate, Assignee, status) VALUES (${taskName}, ${description}, ${dueDate}, ${assignee}, ${status});`;
 };
 
 Blockly.Blocks['text'] = {
@@ -43,36 +53,34 @@ Blockly.Blocks['assign_task'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("Assign Task");
-    this.appendValueInput("task")
-        .setCheck(null)
-        .appendField("Task");
-    this.appendValueInput("user")
-        .setCheck(null)
-        .appendField("User");
+    this.appendValueInput("TASK_NAME")
+        .setCheck('String')
+        .appendField("Task Name");
+    this.appendValueInput("ASSIGNEE")
+        .setCheck('String')
+        .appendField("Assignee");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(230);
+    this.setColour('#89CFF0'); // light blue
     this.setTooltip("Assign a task to a user");
-    this.setHelpUrl("");
   }
 };
-Blockly.JavaScript['assign_task'] = function(block) {
-  var taskName = Blockly.JavaScript.valueToCode(block, 'task', Blockly.JavaScript.ORDER_NONE) || "''";
-  var user = Blockly.JavaScript.valueToCode(block, 'user', Blockly.JavaScript.ORDER_NONE) || "''";
 
-  // Generate JavaScript code to create a task object
-  var code = `{
-    task: ${taskName},
-    user: ${user}
-  }`;
+Blockly.JavaScript['assign_task'] = function(block) {
+  var taskName = Blockly.JavaScript.valueToCode(block, 'TASK_NAME', Blockly.JavaScript.ORDER_NONE) || "''";
+  var assignee = Blockly.JavaScript.valueToCode(block, 'ASSIGNEE', Blockly.JavaScript.ORDER_NONE) || "''";
+
+  // Generate JavaScript code to assign a task to a user
+  var code = `UPDATE Tasks SET Assignee = ${assignee} WHERE TaskName = ${taskName};`;
 
   return code;
 };
 
+
 Blockly.Blocks['retrieve_tasks'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField('SELECT * FROM Tasks;');
+        .appendField('Retrieve All Tasks');
     this.setOutput(true, 'String');
     this.setColour('#89CFF0'); // light blue
     this.setTooltip('Retrieve all tasks from the table');
@@ -83,39 +91,6 @@ Blockly.JavaScript['retrieve_tasks'] = function(block) {
   return 'SELECT * FROM Tasks;';
 };
 
-// FILTER CONDITION - 'filter_condition'
-Blockly.Blocks['filter_condition'] = {
-  init: function() {
-    this.appendValueInput('FILTER_FIELD')
-        .setCheck('var')
-        .appendField('Filter by');
-    this.appendDummyInput()
-        .appendField(new Blockly.FieldDropdown([
-          ['=', '='],
-          ['>', '>'],
-          ['<', '<'],
-          ['>=', '>='],
-          ['<=', '<='],
-          ['LIKE', 'LIKE'],
-          ['!=', '!=']
-        ]), 'OPERATOR');
-    this.appendValueInput('FILTER_VALUE')
-        .setCheck(['String', 'Number'])
-        .appendField('Value');
-    this.setInputsInline(true);
-    this.setOutput(true, 'var');
-    this.setColour('#CDB7F6'); // purple color
-    this.setTooltip('Filter rows based on a condition');
-  }
-};
-
-Blockly.JavaScript['filter_condition'] = function(block) {
-  var field = Blockly.JavaScript.valueToCode(block, 'FILTER_FIELD', Blockly.JavaScript.ORDER_ATOMIC);
-  var operator = block.getFieldValue('OPERATOR');
-  var value = Blockly.JavaScript.valueToCode(block, 'FILTER_VALUE', Blockly.JavaScript.ORDER_ATOMIC);
-
-  return `${field} ${operator} ${value}`;
-};
 // Define the "set_dependency" block
 Blockly.Blocks['set_dependency'] = {
   init: function() {
@@ -156,7 +131,7 @@ Blockly.Blocks['update_task_status'] = {
         .setCheck(null)
         .appendField("Task");
     this.appendValueInput("status")
-        .setCheck(null)
+        .setCheck('String')  // Updated to set the expected input type
         .appendField("Status");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
@@ -165,17 +140,13 @@ Blockly.Blocks['update_task_status'] = {
     this.setHelpUrl("");
   }
 };
+
 Blockly.JavaScript['update_task_status'] = function(block) {
   var task_name = Blockly.JavaScript.valueToCode(block, 'task', Blockly.JavaScript.ORDER_NONE) || "''";
   var status = Blockly.JavaScript.valueToCode(block, 'status', Blockly.JavaScript.ORDER_NONE) || "''";
 
-  // Generate JavaScript code to create a task object
-  var code = `{
-    task: ${task_name},
-    status: ${status}
-  }`;
-
-  //var displayCode = 'console.log(\'${code}\');';
+  // Generate JavaScript code to update the status of a task
+  var code = `UPDATE Tasks SET status = ${status} WHERE TaskName = ${task_name};`;
 
   return code;
 };
@@ -187,14 +158,24 @@ Blockly.Blocks['filter_tasks'] = {
     this.appendDummyInput()
         .appendField("Filter Tasks");
     this.appendValueInput("criteria")
-        .setCheck(null)
-        .appendField("Criteria");
+        .setCheck('String')  // Updated to set the expected input type
+        .appendField("Status");
     this.setOutput(true, null);
     this.setColour(210);
-    this.setTooltip("Filter tasks based on criteria");
+    this.setTooltip("Filter tasks based on status");
     this.setHelpUrl("");
   }
 };
+
+Blockly.JavaScript['filter_tasks'] = function(block) {
+  var status = Blockly.JavaScript.valueToCode(block, 'criteria', Blockly.JavaScript.ORDER_NONE) || "''";
+
+  // Generate JavaScript code to filter tasks based on status
+  var code = `SELECT * FROM Tasks WHERE status = ${status};`;
+
+  return code;
+};
+
 
 // Define the "sort_tasks" block
 Blockly.Blocks['sort_tasks'] = {
@@ -203,13 +184,27 @@ Blockly.Blocks['sort_tasks'] = {
         .appendField("Sort Tasks");
     this.appendValueInput("criteria")
         .setCheck(null)
-        .appendField("Criteria");
+        .appendField("Criteria")
+        .appendField(new Blockly.FieldDropdown([
+          ['Ascending Due Date', 'DueDate ASC'],
+          ['Descending Due Date', 'DueDate DESC']
+        ]), 'SORT_ORDER');
     this.setOutput(true, null);
     this.setColour(210);
     this.setTooltip("Sort tasks based on criteria");
     this.setHelpUrl("");
   }
 };
+
+Blockly.JavaScript['sort_tasks'] = function(block) {
+  var sortOrder = block.getFieldValue('SORT_ORDER');
+
+  // Generate JavaScript code to sort tasks based on the selected criteria
+  var code = `ORDER BY ${sortOrder}`;
+
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
 
 // Define the "date" block
 Blockly.Blocks['custom_date'] = {
@@ -219,18 +214,18 @@ init: function() {
 
   // Dropdown for Month
   var monthOptions = [
-    ["January", "0"],
-    ["February", "1"],
-    ["March", "2"],
-    ["April", "3"],
-    ["May", "4"],
-    ["June", "5"],
-    ["July", "6"],
-    ["August", "7"],
-    ["September", "8"],
-    ["October", "9"],
-    ["November", "10"],
-    ["December", "11"]
+    ["January", "1"],
+    ["February", "2"],
+    ["March", "3"],
+    ["April", "4"],
+    ["May", "5"],
+    ["June", "6"],
+    ["July", "7"],
+    ["August", "8"],
+    ["September", "9"],
+    ["October", "10"],
+    ["November", "11"],
+    ["December", "12"]
   ];
   this.appendDummyInput()
       .appendField("Month")
@@ -262,8 +257,32 @@ var day = block.getFieldValue('DAY');
 var year = block.getFieldValue('YEAR');
 
 // Generate JavaScript code to create a Date object
-var code = `new Date(${year}, ${month}, ${day})`;
+var code = `(${year}-${month}-${day})`;
 
 return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+// STATUS - 'status'
+Blockly.Blocks['status'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Status")
+        .appendField(new Blockly.FieldDropdown([
+          ['In Progress', 'In Progress'],
+          ['Finished', 'Finished']
+        ]), 'STATUS');
+    this.setOutput(true, 'String');
+    this.setColour(230);
+    this.setTooltip("Select a task status");
+  }
+};
+
+Blockly.JavaScript['status'] = function(block) {
+  var status = block.getFieldValue('STATUS');
+
+  // Generate JavaScript code to get the selected status
+  var code = `'${status}'`;
+
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
 

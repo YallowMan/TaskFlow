@@ -1,16 +1,18 @@
 // Define the "create_task" block
 Blockly.Blocks['create_task'] = {
   init: function() {
+    this.appendDummyInput
+    .appendField('Create Task')
     this.appendValueInput('TASK_NAME')
-        .appendField('INSERT INTO Tasks (TaskName, Description, DueDate) VALUES (')
+        .appendField('Task Name')
         .setCheck('String')
         .appendField(',');
     this.appendValueInput('DESCRIPTION')
         .setCheck('String')
-        .appendField(',');
+        .appendField('Description');
     this.appendValueInput('DUE_DATE')
-        .setCheck('String')
-        .appendField(');');
+        .setCheck('Date')
+        .appendField('Due Date');
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour('#89CFF0'); // light blue

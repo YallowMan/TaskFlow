@@ -1,37 +1,28 @@
 // Define the "create_task" block
 Blockly.Blocks['create_task'] = {
   init: function() {
-    this.appendDummyInput()
-        .appendField("Create Task");
-    this.appendValueInput("task_name")
-        .setCheck("String")
-        .appendField("Task Name");
-    this.appendValueInput("task_description")
-        .setCheck("String")
-        .appendField("Task Description");
-    this.appendValueInput("due_date")
-        .setCheck("Date")
-        .appendField("Due Date");
+    this.appendValueInput('TASK_NAME')
+        .appendField('INSERT INTO Tasks (TaskName, Description, DueDate) VALUES (')
+        .setCheck('String')
+        .appendField(',');
+    this.appendValueInput('DESCRIPTION')
+        .setCheck('String')
+        .appendField(',');
+    this.appendValueInput('DUE_DATE')
+        .setCheck('String')
+        .appendField(');');
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(230);
-    this.setTooltip("Create a new task");
-    this.setHelpUrl("");
+    this.setColour('#89CFF0'); // light blue
+    this.setTooltip('Insert a new task into the table');
   }
 };
 Blockly.JavaScript['create_task'] = function(block) {
-var taskName = Blockly.JavaScript.valueToCode(block, 'task_name', Blockly.JavaScript.ORDER_NONE) || "''";
-var taskDescription = Blockly.JavaScript.valueToCode(block, 'task_description', Blockly.JavaScript.ORDER_NONE) || "''";
-var dueDate = Blockly.JavaScript.valueToCode(block, 'due_date', Blockly.JavaScript.ORDER_NONE) || "null";
+  var taskName = Blockly.JavaScript.valueToCode(block, 'TASK_NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  var description = Blockly.JavaScript.valueToCode(block, 'DESCRIPTION', Blockly.JavaScript.ORDER_ATOMIC);
+  var dueDate = Blockly.JavaScript.valueToCode(block, 'DUE_DATE', Blockly.JavaScript.ORDER_ATOMIC);
 
-// Generate JavaScript code to create a task object
-var code = `{
-  name: ${taskName},
-  description: ${taskDescription},
-  dueDate: ${dueDate}
-}`;
-
-return code;
+  return `INSERT INTO Tasks (TaskName, Description, DueDate) VALUES (${taskName}, ${description}, ${dueDate});`;
 };
 
 Blockly.Blocks['text'] = {

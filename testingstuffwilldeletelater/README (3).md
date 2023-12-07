@@ -18,11 +18,11 @@ In the context of the task management DSL, parsing would involve breaking down t
 
 ### Generate a SQL Query 
 - https://yallowman.github.io/TaskFlow/testingstuffwilldeletelater/index.html
-- Use Interface to create and build queries to task manage.
-- Generate the code by pressing the Generate Code button, which will give a SQL query.
-- Select and Copy the query to clipboard
+  - Use Interface to create and build queries to task manage.
+  - Generate the code by pressing the Generate Code button, which will give a SQL query.
+  - Select and Copy the query to clipboard
 
 ### Run the query in the Datagrip IDE
 - Open up the database file and then create a console.
-- Use said console by inserting your Query
+  - Use said console by inserting your Query
 

@@ -69,6 +69,53 @@ Blockly.JavaScript['assign_task'] = function(block) {
   return code;
 };
 
+Blockly.Blocks['retrieve_tasks'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField('SELECT * FROM Tasks;');
+    this.setOutput(true, 'String');
+    this.setColour('#89CFF0'); // light blue
+    this.setTooltip('Retrieve all tasks from the table');
+  }
+};
+
+Blockly.JavaScript['retrieve_tasks'] = function(block) {
+  return 'SELECT * FROM Tasks;';
+};
+
+// FILTER CONDITION - 'filter_condition'
+Blockly.Blocks['filter_condition'] = {
+  init: function() {
+    this.appendValueInput('FILTER_FIELD')
+        .setCheck('var')
+        .appendField('Filter by');
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldDropdown([
+          ['=', '='],
+          ['>', '>'],
+          ['<', '<'],
+          ['>=', '>='],
+          ['<=', '<='],
+          ['LIKE', 'LIKE'],
+          ['!=', '!=']
+        ]), 'OPERATOR');
+    this.appendValueInput('FILTER_VALUE')
+        .setCheck(['String', 'Number'])
+        .appendField('Value');
+    this.setInputsInline(true);
+    this.setOutput(true, 'var');
+    this.setColour('#CDB7F6'); // purple color
+    this.setTooltip('Filter rows based on a condition');
+  }
+};
+
+Blockly.JavaScript['filter_condition'] = function(block) {
+  var field = Blockly.JavaScript.valueToCode(block, 'FILTER_FIELD', Blockly.JavaScript.ORDER_ATOMIC);
+  var operator = block.getFieldValue('OPERATOR');
+  var value = Blockly.JavaScript.valueToCode(block, 'FILTER_VALUE', Blockly.JavaScript.ORDER_ATOMIC);
+
+  return `${field} ${operator} ${value}`;
+};
 // Define the "set_dependency" block
 Blockly.Blocks['set_dependency'] = {
   init: function() {

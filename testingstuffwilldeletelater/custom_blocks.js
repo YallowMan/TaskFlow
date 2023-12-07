@@ -88,7 +88,7 @@ Blockly.Blocks['retrieve_tasks'] = {
 };
 
 Blockly.JavaScript['retrieve_tasks'] = function(block) {
-  return 'SELECT * FROM Tasks;';
+  return 'SELECT * FROM Tasks';
 };
 
 // Define the "set_dependency" block
@@ -171,7 +171,7 @@ Blockly.JavaScript['filter_tasks'] = function(block) {
   var status = Blockly.JavaScript.valueToCode(block, 'criteria', Blockly.JavaScript.ORDER_NONE) || "''";
 
   // Generate JavaScript code to filter tasks based on status
-  var code = `SELECT * FROM Tasks WHERE status = ${status};`;
+  var code = `SELECT * FROM Tasks WHERE status = ${status}`;
 
   return code;
 };

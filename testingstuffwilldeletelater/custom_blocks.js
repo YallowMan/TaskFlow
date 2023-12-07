@@ -2,7 +2,7 @@
 Blockly.Blocks['create_task'] = {
   init: function() {
     this.appendDummyInput()
-    .appendField('Create Task')
+        .appendField('Create Task')
     this.appendValueInput('TASK_NAME')
         .appendField('Task Name')
         .setCheck('String')

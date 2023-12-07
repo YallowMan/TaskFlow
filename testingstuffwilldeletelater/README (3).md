@@ -15,5 +15,14 @@ In the context of the task management DSL, parsing would involve breaking down t
 ### Download Datagrip
 - [Database Manager SQL](https://www.jetbrains.com/datagrip/)
 - This will have the SQL type of IDE in which you can mess around with mySQL to run different queries that are given through the blocks to manage our tasks.
-- 
+
+### Generate a SQL Query 
+- https://yallowman.github.io/TaskFlow/testingstuffwilldeletelater/index.html
+- Use Interface to create and build queries to task manage.
+- Generate the code by pressing the Generate Code button, which will give a SQL query.
+- Select and Copy the query to clipboard
+
+### Run the query in the Datagrip IDE
+- Open up the database file and then create a console.
+- Use said console by inserting your Query
 

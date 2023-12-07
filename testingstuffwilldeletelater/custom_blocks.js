@@ -257,7 +257,7 @@ var day = block.getFieldValue('DAY');
 var year = block.getFieldValue('YEAR');
 
 // Generate JavaScript code to create a Date object
-var code = `(${year}-${month}-${day})`;
+var code = `'${year}-${month}-${day}'`;
 
 return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };

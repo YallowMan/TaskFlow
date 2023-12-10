@@ -5,7 +5,11 @@ https://yallowman.github.io/TaskFlow/src
 - Emma Harper
 - Emily Nguyen
 - Sofia Bejerano
-  
+
+## Links to Videos
+Project Info
+Technical Introduction
+
 ## Motivation
 Creating a effective task management system is crucial for personal and professional success. Simplify the sometimes overwhelming process of organizing, prioritizing and tracking tasks.
 

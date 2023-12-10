@@ -1,6 +1,10 @@
 # TASKFLOW
 https://yallowman.github.io/TaskFlow/src
-## Group Members: Carlos Garcia, Emma Harper, Emily Nguyen, Sofia Bejerano
+## Group Members
+- Carlos Garcia
+- Emma Harper
+- Emily Nguyen
+- Sofia Bejerano
 Creating a effective task management system is crucial for personal and professional success. Simplify the sometimes overwhelming process of organizing, prioritizing and tracking tasks.
 
 Transform the way that tasks are managed with an intuitive block based language. Allows users to create, assign, and track tasks effortlessly. TaskFlow eliminates the need for complex syntax and technical expertise, making it suitable for users of all skill levels.

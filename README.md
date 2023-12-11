@@ -1,4 +1,5 @@
 # TaskFlow
+------------
 https://yallowman.github.io/TaskFlow/src
 ## Group Members
 - Carlos Garcia
@@ -6,7 +7,7 @@ https://yallowman.github.io/TaskFlow/src
 - Emily Nguyen
 - Sofia Bejerano
 
-## Links to Videos
+## TaskFlow Videos
 Project Info
 
 Technical Introduction

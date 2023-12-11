@@ -10,7 +10,7 @@ https://yallowman.github.io/TaskFlow/src
 ## TaskFlow Videos
 [Project Info](docs/Video1.mp4)
 
-Technical Introduction
+[Technical Introduction](docs/Tech Demo.mp4)
 
 ## Motivation
 Creating a effective task management system is crucial for personal and professional success. Simplify the sometimes overwhelming process of organizing, prioritizing and tracking tasks.

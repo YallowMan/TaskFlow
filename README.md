@@ -23,9 +23,10 @@ Transform the way that tasks are managed with an intuitive block based language.
 ### How does the project relate to parsing, interpretation, and compilation?
 In the context of the task management DSL, parsing would involve breaking down the user's input into individual commands, identifying the keywords, parameters, and relationships between them. The interpreter would interpret each command and perform the corresponding actions within the task management system. For example, creating a task, assigning it to an individual or team, setting dependencies, updating task status, filtering and sorting tasks, and setting reminders. Compilation could involve optimizing the commands and generating code that directly interacts with the task management system's underlying data structures and APIs.
 
-## Installation & Set Up of Taskflow
-[Instructions](docs/README.md)
+## Instructions
 
+### Installation & Set Up of Taskflow
+[Instructions](docs/README.md)
 
 ### Setting up the IDE
 

@@ -32,7 +32,7 @@ In the context of the task management DSL, parsing would involve breaking down t
 - Create a new project in DataGrip---give it a name. Go to the Data Console on the top left by default and use the following menus: 'New -> Data Source -> Sqlite'.
 - Once you have done that, you can name it TaskManager.db.
 
-  #### Creating the tables
+#### Creating the tables
 
 1. Use the Sqlite statements below to create the main table for the TaskManager
 ```sqlite
@@ -46,6 +46,12 @@ CREATE TABLE Tasks
     status TEXT
 );
 ```
-  
-  
+2. Run the Query by pressing the green play bytton in the Query Console. 
+
+
+
+## Future Work
+
+
+## Work Division
       

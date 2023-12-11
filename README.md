@@ -87,13 +87,13 @@ INSERT INTO Tasks (TaskName, Description, DueDate, Assignee, status) VALUES
       - Fixed and Updated Documentation with changes to help user understand how to use TaskFlow.
     
 - Emma Harper
-  - [Testing Blockly Construction]
+  - [Testing Blockly Construction](src/custom_blocks.js)
       - Tested code for bugs and issues and if queries would work within Datagrip
   - [html](src/index.html)
       - Worked with Sofia to create Index file and updated it with different blocks as they were added
 
 - Sofia Bejerano
-  - [Testing Blockly Construction]
+  - [Testing Blockly Construction](src/custom_blocks.js)
       - Tested code for bugs and issues and if queries would work within Datagrip
   - [html](src/index.html)
       - Worked with Sofia to create Index file and updated it with different blocks as they were added

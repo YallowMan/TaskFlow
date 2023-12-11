@@ -46,7 +46,7 @@ CREATE TABLE Tasks
     status TEXT
 );
 ```
-2. Run the Query by pressing the green play bytton in the Query Console.
+2. Run the Query by pressing the green play button in the Query Console.
 
 3. If you would like some data set up in the table copy and paste the code into the query console and once again press the green button 
 ```sqlite
@@ -66,7 +66,7 @@ Use Interface to create and build queries to task manage.
 #### Run the query in the Datagrip IDE
 - Go to the datasource you had named for your database
   - Use said console by inserting your Query
-  - 
+  - Run the query by pressing the green play button in the Query Console
 ## Future Work
 
 

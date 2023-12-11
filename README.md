@@ -69,13 +69,18 @@ INSERT INTO Tasks (TaskName, Description, DueDate, Assignee, status) VALUES
   - Use said console by inserting your Query
   - Run the query by pressing the green play button in the Query Console
 ## Future Work
-
-
+- In the future we would love to be able to add a true server backend whether it be sqlite or MySQL. We want to be able to create something that acts similar to Jira where we can set up tasks and some task dependencies to make it more nuanced in how tasks should be done or not. We would also like it so that the code could be run on the blockly end and that way they can see their tasks on the same page and then be able to manipulate it as they see fit. Where the user is able to see the tables on the blockly page as well as the tasks that are closest to a timeframe with different filters to act as reminders. 
+- Contributions to the project are always welcome if you would like to see something added or fixed, raise an issue in the repo. 
 ## Work Division
 - Carlos Garcia
+  - [Design Files]
+  - 
 
 - Emily Nguyen
-
+  - Go to the datasource you had named for your database
+  - Use said console by inserting your Query
+    
 - Emma Harper
-
-- sofia Bejerano
+  - Go to the datasource you had named for your database
+  - Use said console by inserting your Query
+- Sofia Bejerano

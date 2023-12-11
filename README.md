@@ -46,9 +46,17 @@ CREATE TABLE Tasks
     status TEXT
 );
 ```
-2. Run the Query by pressing the green play bytton in the Query Console. 
+2. Run the Query by pressing the green play bytton in the Query Console.
 
-
+3. If you would like some data set up in the table copy and paste the code into the query console and once again press the green button 
+```sqlite
+INSERT INTO Tasks (TaskName, Description, DueDate, Assignee, status) VALUES
+('Test Task', 'This is a fake task for you to look at', '2024-4-5', 'Ben', 'In Progress'),
+('Set up the Frontend', 'Doing the laundry', '2025-2-7', 'Ben', 'In Progress'),
+('Create New Layout', 'Create layout for new repository', '2023-12-5', 'Alex', 'Finished'),
+('Fix Up Documentation', 'Fixing up the documentation in README', '2023-12-21', 'Frank', 'In Progress'),
+('Celebreate New Year', 'Its A new year to Celebrate', '2023-12-31', 'Carlos', 'Finished');
+```
 
 ## Future Work
 

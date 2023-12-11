@@ -8,7 +8,7 @@ https://yallowman.github.io/TaskFlow/src
 - Sofia Bejerano
 
 ## TaskFlow Videos
-Project Info
+[Project Info](docs/Video1.mp4)
 
 Technical Introduction
 

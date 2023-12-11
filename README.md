@@ -30,5 +30,22 @@ In the context of the task management DSL, parsing would involve breaking down t
     - Account & Usage of DataGrip is free with any Chapman Email
 
 - Create a new project in DataGrip---give it a name. Go to the Data Console on the top left by default and use the following menus: 'New -> Data Source -> Sqlite'.
-      
+- Once you have done that, you can name it TaskManager.db.
+
+  #### Creating the tables
+
+1. Use the Sqlite statements below to create the main table for the TaskManager
+```sqlite
+-- Task Table: Main table used to store information of Tasks
+CREATE TABLE Tasks
+(
+    TaskName TEXT,
+    Description TEXT,
+    DueDate DATE,
+    assignee TEXT,
+    status TEXT
+);
+```
+  
+  
       

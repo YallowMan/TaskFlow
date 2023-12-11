@@ -200,7 +200,7 @@ Blockly.JavaScript['sort_tasks'] = function(block) {
   var sortOrder = block.getFieldValue('SORT_ORDER');
 
   // Generate JavaScript code to sort tasks based on the selected criteria
-  var code = `ORDER BY ${sortOrder}`;
+  var code = `SELECT * FROM Tasks ORDER BY ${sortOrder}`;
 
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };

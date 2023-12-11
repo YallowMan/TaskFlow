@@ -58,6 +58,15 @@ INSERT INTO Tasks (TaskName, Description, DueDate, Assignee, status) VALUES
 ('Celebreate New Year', 'Its A new year to Celebrate', '2023-12-31', 'Carlos', 'Finished');
 ```
 
+### Using Blockly and using Datagrip
+Use Interface to create and build queries to task manage.
+  - Generate the code by pressing the Generate Code button, which will give a SQL query.
+  - Select and Copy the query to clipboard
+
+#### Run the query in the Datagrip IDE
+- Go to the datasource you had named for your database
+  - Use said console by inserting your Query
+  - 
 ## Future Work
 
 

@@ -1,22 +1,48 @@
-# Link to Midterm Presentation
-[TaskFlow Slides](https://docs.google.com/presentation/d/1FVmqdsD7Z62_QzUZkrdsjwdCT_HNtBvu/edit?usp=sharing&ouid=113901356202814530599&rtpof=true&sd=true)
+# Instructions
+## Installation & Set Up of Taskflow
 
-# Directions for Running Prototype
+### Setting up the IDE
 
-To run and test this milestone you will need to use this link to get to the blockly environment. The link being https://yallowman.github.io/TaskFlow/design-blocks/ 
+- [Install DataGrip](https://www.jetbrains.com/datagrip/download/)
+    - DataGrip is an IDE for Databases by Jetbrains. It will help you connect to and configure the localhost server if you would like to run your Sqlite server locally.
+    - Account & Usage of DataGrip is free with any Chapman Email
 
-## Creating a task
-**1. Start with the create a task block**
--You can use the green text string block to fill in any missing info you want to put in. There is also a new block that in the text section where you can input it for more specific parts of the date. You would then use more string text blocks to fill in that information.
+- Create a new project in DataGrip---give it a name. Go to the Data Console on the top left by default and use the following menus: 'New -> Data Source -> Sqlite'.
+- Once you have done that, you can name it TaskManager.db.
 
-2. Add a task name description and then after adding the due dates second block with the month day and year.
+#### Creating the tables
 
-## Assign a Task
-- Here you will just re-enter what the task is and who you would like to be working on it through putting a name for the user.
+1. Use the Sqlite statements below to create the main table for the TaskManager
+```sqlite
+-- Task Table: Main table used to store information of Tasks
+CREATE TABLE Tasks
+(
+    TaskName TEXT,
+    Description TEXT,
+    DueDate DATE,
+    assignee TEXT,
+    status TEXT
+);
+```
+2. Run the Query by pressing the green play button in the Query Console.
 
-## Set a Dependency 
-- Connect this block to the past two blocks if you want to set a task within the task.
+3. If you would like some data set up in the table copy and paste the code into the query console and once again press the green button 
+```sqlite
+INSERT INTO Tasks (TaskName, Description, DueDate, Assignee, status) VALUES
+('Test Task', 'This is a fake task for you to look at', '2024-4-5', 'Ben', 'In Progress'),
+('Set up the Frontend', 'Doing the laundry', '2025-2-7', 'Ben', 'In Progress'),
+('Create New Layout', 'Create layout for new repository', '2023-12-5', 'Alex', 'Finished'),
+('Fix Up Documentation', 'Fixing up the documentation in README', '2023-12-21', 'Frank', 'In Progress'),
+('Celebreate New Year', 'Its A new year to Celebrate', '2023-12-31', 'Carlos', 'Finished');
+```
 
-## Updating the Task Status
-1. Connect this block to the current iteration if you would like to update a task status
-- Here you identify the task you want to update by putting the name and then you are able to change the status by typing in whether it is Done, Needs Attention or to cut it.
+### Using Blockly and using Datagrip
+  - Open up [TaskFlow Blockly](https://yallowman.github.io/TaskFlow/src/) site
+  - You will use the interface to create and build queries to task manage.
+  - Generate the code by pressing the Generate Code button, which will give a SQLite query.
+  - Select and Copy the query to clipboard
+
+#### Run the query in the Datagrip IDE
+- Go to the datasource you had named for your database
+  - Use said console by inserting your Query
+  - Run the query by pressing the green play button in the Query Console

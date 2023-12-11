@@ -59,8 +59,8 @@ INSERT INTO Tasks (TaskName, Description, DueDate, Assignee, status) VALUES
 ```
 
 ### Using Blockly and using Datagrip
-  - Open the [TaskFlow Blockly](https://yallowman.github.io/TaskFlow/src/) site
-  - You will use the nterface to create and build queries to task manage.
+  - Open up [TaskFlow Blockly](https://yallowman.github.io/TaskFlow/src/) site
+  - You will use the interface to create and build queries to task manage.
   - Generate the code by pressing the Generate Code button, which will give a SQLite query.
   - Select and Copy the query to clipboard
 

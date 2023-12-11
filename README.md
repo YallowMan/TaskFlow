@@ -75,14 +75,25 @@ INSERT INTO Tasks (TaskName, Description, DueDate, Assignee, status) VALUES
 - Contributions to the project are always welcome if you would like to see something added or fixed, raise an issue in the repo. 
 ## Work Division
 - Carlos Garcia
-  - [Design Files]
-  - 
+  - [Design Files](docs/Video1.mp4)
+      - Worked on Design files
+  - [Code for Blocks](src/custom_blocks.js)
+      - Continued and set up code for code generation of creating and filtering the tasks
 
 - Emily Nguyen
-  - Go to the datasource you had named for your database
-  - Use said console by inserting your Query
+  - [Code for Blocks](src/custom_blocks.js)
+      - Worked on Code for Creating, Updating tasks with new info and blocks themselves
+  - [Documentation Refinement](docs/Instructions.md)
+      - Fixed and Updated Documentation with changes to help user understand how to use TaskFlow.
     
 - Emma Harper
-  - Go to the datasource you had named for your database
-  - Use said console by inserting your Query
+  - [Testing Blockly Construction]
+      - Tested code for bugs and issues and if queries would work within Datagrip
+  - [html](src/index.html)
+      - Worked with Sofia to create Index file and updated it with different blocks as they were added
+
 - Sofia Bejerano
+  - [Testing Blockly Construction]
+      - Tested code for bugs and issues and if queries would work within Datagrip
+  - [html](src/index.html)
+      - Worked with Sofia to create Index file and updated it with different blocks as they were added

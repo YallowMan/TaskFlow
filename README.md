@@ -62,4 +62,10 @@ INSERT INTO Tasks (TaskName, Description, DueDate, Assignee, status) VALUES
 
 
 ## Work Division
-      
+- Carlos Garcia
+
+- Emily Nguyen
+
+- Emma Harper
+
+- sofia Bejerano
